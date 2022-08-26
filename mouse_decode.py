@@ -32,7 +32,7 @@ def to_signed_int(n, bitlength):
 
 def decode_line(line, format, offset=0):
     if format == 'short':
-        return struct.unpack('<Bbb', bytes.fromhex(line[:6]))
+        return struct.unpack('<Bbb', bytes.fromhex(line[offset:offset + 6]))
 
     if format == 'long':
         return (
@@ -44,24 +44,40 @@ def decode_line(line, format, offset=0):
     raise ValueError(f'\'{format}\' is not a supported format')
 
 
-def decode(raw_data):
-    clicks, xs, ys = [], [], []
-    x, y = 0, 0
+def get_format(data):
+    # Entries can have a few different formats (made up names, just to differentiate between known cases)
+    data_len = len(data[0])
+    format = 'unknown'
+    if data_len in (8, 12):
+        format = 'short'
+    elif data_len == 16:
+        format = 'long'
 
-    # Entries can have a few different formats
-    format = ('short', 'long')[len(raw_data[0]) > 8]  # made up names, just to differentiate
-
-    # x-displacement data can start at offset 4 or 6 for format 'long'
-    # Heuristically guess by checking number of non-zero bytes at the possible boundaries (offset 4-5 and 10-11)
     offset = 0
+
+    # For format 'short', offset can be 0 or 4
+    if format == 'short' and data_len == 12:
+        offset = 4
+
+    # For format 'long', data will start at offset 2, but x-displacement data can start at offset 4 or 6
+    # Heuristically guess by checking number of non-zero bytes at the possible boundaries (offset 4-5 and 10-11)
     if format == 'long':
         evidence_4, evidence_6 = 0, 0
-        for line in raw_data:
+        for line in data:
             if line[4:6] != '00':
                 evidence_4 += 1
             if line[10:12] != '00':
                 evidence_6 += 1
-        offset = (4, 6)[evidence_4 < evidence_6] 
+        offset = (4, 6)[evidence_4 < evidence_6]
+
+    return format, offset
+
+
+def decode(raw_data):
+    clicks, xs, ys = [], [], []
+    x, y = 0, 0
+
+    format, offset = get_format(raw_data)
 
     for line in raw_data:
         click, x_displacement, y_displacement = decode_line(line, format=format, offset=offset)
