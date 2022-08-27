@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import argparse
+import pathlib
+import sys
 
 
 KEY_CODES = {
@@ -130,9 +132,11 @@ def simulate_keypresses(keypresses):
 
 
 def decode_keypresses(raw_data, simulate=False):
+    keyboard_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
+
     keypresses = []
     skip_next = False
-    for line in raw_data:
+    for line in keyboard_data:
         if skip_next:
             skip_next = False
             continue
@@ -161,14 +165,18 @@ def decode_keypresses(raw_data, simulate=False):
 def parse_args():
     parser = argparse.ArgumentParser(description='Decode USB Keyboard HID data')
     parser.add_argument('file', type=argparse.FileType('r'), help='keyboard data file')
-    parser.add_argument('--simulate', action='store_true', help='simulate keypresses')
+    parser.add_argument('-o', '--output', type=argparse.FileType('w'), help='output file', default=sys.stdout)
+    parser.add_argument('-s', '--simulate', action='store_true', help='simulate keypresses')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    keyboard_data = [''.join(d.strip().split(':')) for d in args.file.read().split('\n') if d]
-    print(decode_keypresses(keyboard_data, args.simulate))
+    keypresses = decode_keypresses(args.file.read(), simulate=args.simulate)
+    if args.output:
+        args.output.write(keypresses)
+    else:
+        print(keypresses)
 
 
 if __name__ == '__main__':
