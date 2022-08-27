@@ -34,6 +34,9 @@ def decode_line(line, format, offset=0):
     if format == 'short':
         return struct.unpack('<Bbb', bytes.fromhex(line[offset:offset + 6]))
 
+    if format == 'medium':
+        return struct.unpack('<Bhh', bytes.fromhex(line[:10]))
+
     if format == 'long':
         return (
             struct.unpack('<B', bytes.fromhex(line[2:4]))[0],
@@ -50,6 +53,8 @@ def get_format(data):
     format = 'unknown'
     if data_len in (8, 12):
         format = 'short'
+    elif data_len == 14:
+        format = 'medium'
     elif data_len == 16:
         format = 'long'
 
