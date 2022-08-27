@@ -10,23 +10,23 @@ Currently supports keyboard and mouse data.
 ## Installation
 
 Clone repo
-```
+```bash
 git clone https://github.com/Nissen96/USB-HID-decoders.git
 cd USB-HID-decoders
 ```
 
 Install dependencies in a virtual environment with `pipenv` (`pip install pipenv`)
-```
+```bash
 pipenv install
 ```
 
 Run script(s) within virtual environment
-```
+```bash
 pipenv run python <script-name> <script-args>
 ```
 
 Alternatively, install dependencies in the current environment and run scripts with
-```
+```bash
 pip install -r requirements.txt
 python <script-name> <script-args>
 ```
@@ -74,18 +74,25 @@ python mouse_decode.py <mousedata-file> --mode 0 --clicks --animate
 
 ## PCAP Extraction
 
-Extract USB HID data from a packet capture with
-```
-tshark -r <pcap-file> -T fields -e usbhid.data > usbdata.txt
+USB HID data can be extracted from a packet capture with `tshark`, the CLI of Wireshark. In Wireshark, the relevant data is stored in the field `usb.capdata` (Leftover Capture Data) or `usbhid.data` (HID Data). Extract with
+```bash
+tshark -r <pcap-file> -Y 'ubshid.data' -T fields -e usbhid.data > usbdata.txt
 ```
 or
+```bash
+tshark -r <pcap-file> -Y 'usb.capdata' -T fields -e usb.capdata > usbdata.txt
 ```
-tshark -r <pcap-file> -T fields -e usb.capdata > usbdata.txt
-```
-depending on the USB device (if in doubt, try both).
 
-Get data from a specific device by adding a filter for its address/interface, e.g.
-```
+Get data from a specific device by adding a filter for its address, e.g.
+```bash
 -Y 'usb.src == "1.3.1"'
 ```
-Important if capture contains data from multiple USB devices.
+
+Oneliner to extract HID data from all USB devices and store in separate files, named after device address.
+
+```bash
+tshark -r <pcap-file> -Y "usb.capdata || usbhid.data" -T fields -e usb.src -e usb.capdata -e usbhid.data |  # Extract usb.src, usb.capdata, and usbhid.data from all packets with HID data
+sort -s -k1,1 |  # Sort on first field only (usb.src)
+awk '{ printf "%s", (NR==1 ? $1 : pre!=$1 ? "\n" $1 : "") " " $2; pre=$1 }' |  # Group data by usb.src
+awk '{ for (i=2; i<=NF; i++) print $i > "usbdata-" $1 ".txt" }'  # For each group, store data in usbdata-<usb.src>.txt
+```
