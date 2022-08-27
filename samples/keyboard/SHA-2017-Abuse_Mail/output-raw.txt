@@ -1,0 +1,1 @@
+root<ENTER>Welcome123<ENTER>ls -la<ENTER>curl -ks https://root:Welcome123@intranet/secret.zip<ENTER>unzip secret.zip<ENTER>Pyj4m4P4rtY@2017<ENTER>cat secret.txt<ENTER>display hamburg<TAB><ENTER>logout<ENTER>

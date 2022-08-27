@@ -36,4 +36,3 @@ rxterm -geometry 12x1+525+40
 echo a
 rxterm -geometry 12x1+600+40
 echo }
-

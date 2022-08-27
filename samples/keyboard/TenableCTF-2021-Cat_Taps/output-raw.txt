@@ -1,0 +1,1 @@
+notepad.exe<ENTER>Oh hi. You figured it out. Good job. I'm gonna go ahead and type a few things to make this pretty annoying so you can't just it <BACKSPACE><BACKSPACE><BACKSPACE>do it manually. Ok. That's enough. flag{usb_pcaps_are_fun}cq
