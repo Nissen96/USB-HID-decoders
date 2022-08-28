@@ -7,21 +7,16 @@ import signal
 import struct
 
 
-# Pause on <SPACE>
-PAUSED = False
-def pause(_):
-    global PAUSED
-    PAUSED = True
-keyboard.on_press_key('space', pause)
-
-
-# Force quit on q
-def quit(_):
-    os._exit(0)
-keyboard.on_press_key('q', quit)
-
-# Force quit on Ctrl+C
+# Force quit on q and sigint (e.g. Ctrl+C)
+keyboard.on_press_key('q', lambda _: os._exit(0))
 signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
+
+# Pause on <SPACE>
+PAUSE = False
+def pause(_):
+    global PAUSE
+    PAUSE = True
+keyboard.on_press_key('space', pause)
 
 
 def to_signed_int(n, bitlength):
@@ -78,13 +73,13 @@ def get_format(data):
     return format, offset
 
 
-def decode(raw_data):
+def decode_mouse_data(raw_data):
+    mouse_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
+    format, offset = get_format(mouse_data)
+
     clicks, xs, ys = [], [], []
     x, y = 0, 0
-
-    format, offset = get_format(raw_data)
-
-    for line in raw_data:
+    for line in mouse_data:
         click, x_displacement, y_displacement = decode_line(line, format=format, offset=offset)
         clicks.append(click)
 
@@ -98,17 +93,22 @@ def decode(raw_data):
 
 
 def draw(clicks, xs, ys, draw_mode=1, draw_clicks=False, speed=0):
-    global PAUSED
+    global PAUSE
     cur_x, cur_y = xs[0], ys[0]
     mousedown = False
 
-    plt.axis((min(xs) - 50, max(xs) + 50, min(ys) - 50, max(ys) + 50))
+    # Clear plot on c
+    def clear(_):
+        plt.cla()
+        plt.axis((min(xs) - 50, max(xs) + 50, min(ys) - 50, max(ys) + 50))
+    keyboard.on_press_key('c', clear)
 
+    clear(...)
     for step, (click, x, y) in enumerate(zip(clicks, xs, ys)):
-        # Resume animation on <SPACE>
-        if PAUSED:
+        # Handle pause, resume on <SPACE>
+        if PAUSE:
             keyboard.wait('space')
-            PAUSED = False
+            PAUSE = False
 
         left, right, middle = click & 0b1, (click & 0b10) >> 1, (click & 0b100) >> 2
         color = (left * 0.8, middle * 0.8, right * 0.8) if click else 'lightgray'
@@ -139,12 +139,16 @@ def draw(clicks, xs, ys, draw_mode=1, draw_clicks=False, speed=0):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Visualize USB Mouse data', epilog='Press <SPACE> during animation to pause/resume or q to quit', formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description='Visualize USB Mouse data',
+        epilog='Keyboard commands:\n  <SPACE>: pause/resume animation\n  c: clear screen during animation\n  q: quit', 
+        formatter_class=argparse.RawTextHelpFormatter
+    )
     parser.add_argument('file', type=argparse.FileType('r'), help='mouse data file')
     parser.add_argument('-m', '--mode', type=int, choices=range(3), default=1, metavar='0-2', help='''display mode for mouse movement, from less to more verbose (default: %(default)s)
-\t0: hide mouse movements (use with -c for clicks only)
-\t1: show mouse movements while any mouse button is held
-\t2: show all mouse movements''')
+  0: hide mouse movements (use with -c for clicks only)
+  1: show mouse movements while any mouse button is held
+  2: show all mouse movements''')
     parser.add_argument('-c', '--clicks', action='store_true', help='show mouse clicks explicitly')
     parser.add_argument('-s', '--speed', type=int, choices=range(0, 11), default=0, metavar='0, 1-10', help='animation speed, 0 for no animation (default: %(default)s)')
     return parser.parse_args()
@@ -152,15 +156,8 @@ def parse_args():
 
 def main():
     args = parse_args()
-    mouse_data = [''.join(d.strip().split(':')) for d in args.file.read().split('\n') if d]
-    clicks, xs, ys = decode(mouse_data)
-
-    draw(
-        clicks, xs, ys,
-        draw_mode=args.mode,
-        draw_clicks=args.clicks,
-        speed=args.speed
-    )
+    clicks, xs, ys = decode_mouse_data(args.file.read())
+    draw(clicks, xs, ys, draw_mode=args.mode, draw_clicks=args.clicks, speed=args.speed)
 
 
 if __name__ == '__main__':

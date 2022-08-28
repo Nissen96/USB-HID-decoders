@@ -52,7 +52,7 @@ Visualizes mouse movement. Button presses can be shown explicitly with `--clicks
 - 1: Show mouse movement only while any mouse button is held
 - 2: Show all mouse movements
 
-Moves and clicks can optionally be animated by adding an animation speed with `--speed [1-10]`. Animation can be paused and resumed with `<SPACE>` and quitted by pressing `q`.
+Moves and clicks can be animated by setting `--speed [1-10]`. Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`.
 
 Colors indicate the mouse button(s) pressed when clicking/moving. Movement while no buttons are held is colored gray (in mode 2).
 
