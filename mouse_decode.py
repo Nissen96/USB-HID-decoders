@@ -97,14 +97,14 @@ def decode(raw_data):
     return clicks, xs, ys
 
 
-def draw(clicks, xs, ys, draw_moves=True, mousedown_only=True, draw_clicks=False, animate=False):
+def draw(clicks, xs, ys, draw_mode=1, draw_clicks=False, speed=0):
     global PAUSED
     cur_x, cur_y = xs[0], ys[0]
     mousedown = False
 
     plt.axis((min(xs) - 50, max(xs) + 50, min(ys) - 50, max(ys) + 50))
 
-    for click, x, y in zip(clicks, xs, ys):
+    for step, (click, x, y) in enumerate(zip(clicks, xs, ys)):
         # Resume animation on <SPACE>
         if PAUSED:
             keyboard.wait('space')
@@ -113,20 +113,23 @@ def draw(clicks, xs, ys, draw_moves=True, mousedown_only=True, draw_clicks=False
         left, right, middle = click & 0b1, (click & 0b10) >> 1, (click & 0b100) >> 2
         color = (left * 0.8, middle * 0.8, right * 0.8) if click else 'lightgray'
 
-        if draw_clicks and click and not mousedown:
+        draw_click = draw_clicks and click and not mousedown
+        draw_move = draw_mode == 2 or (draw_mode == 1 and click)
+
+        if draw_click:
             plt.plot(x, y, '+', color=color, markersize=8, zorder=1)
 
-        if draw_moves:
-            if click or not mousedown_only:
-                plt.plot((cur_x, x), (cur_y, y), '-', color=color, linewidth=2 if click else 1, zorder=0)
+        if draw_move:
+            plt.plot((cur_x, x), (cur_y, y), '-', color=color, linewidth=2 if click else 1, zorder=0)
 
-        if animate:
-            # Use larger delay on new clicks
-            if draw_clicks and click and not mousedown:
-                plt.pause(2)
+        # Animate using small plot pauses
+        if speed > 0:
+            # Pause on all new clicks, delay depends on speed
+            if draw_click:
+                plt.pause(2 ** (3 - speed))
 
-            # Use small delay for any other drawn mouse movement as a crude animation
-            elif draw_moves and (click or not mousedown_only):
+            # Tiny pause on drawn mouse movement, skips some pauses depending on speed
+            elif draw_move and step % 2**(speed - 1) == 0:
                 plt.pause(0.01)
 
         cur_x, cur_y = x, y
@@ -138,12 +141,12 @@ def draw(clicks, xs, ys, draw_moves=True, mousedown_only=True, draw_clicks=False
 def parse_args():
     parser = argparse.ArgumentParser(description='Visualize USB Mouse data', epilog='Press <SPACE> during animation to pause/resume or q to quit', formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('file', type=argparse.FileType('r'), help='mouse data file')
-    parser.add_argument('-a', '--animate', action='store_true', help='animate mouse movement')
-    parser.add_argument('-c', '--clicks', action='store_true', help='show mouse clicks explicitly')
-    parser.add_argument('-m', '--mode', type=int, choices=range(3), default=1, metavar='0-2', help='''display mode for mouse movement, from less to more verbose [0-2] (default: %(default)s)
+    parser.add_argument('-m', '--mode', type=int, choices=range(3), default=1, metavar='0-2', help='''display mode for mouse movement, from less to more verbose (default: %(default)s)
 \t0: hide mouse movements (use with -c for clicks only)
 \t1: show mouse movements while any mouse button is held
 \t2: show all mouse movements''')
+    parser.add_argument('-c', '--clicks', action='store_true', help='show mouse clicks explicitly')
+    parser.add_argument('-s', '--speed', type=int, choices=range(0, 11), default=0, metavar='0, 1-10', help='animation speed, 0 for no animation (default: %(default)s)')
     return parser.parse_args()
 
 
@@ -154,10 +157,9 @@ def main():
 
     draw(
         clicks, xs, ys,
-        draw_moves=args.mode > 0,
-        mousedown_only=args.mode == 1,
+        draw_mode=args.mode,
         draw_clicks=args.clicks,
-        animate=args.animate
+        speed=args.speed
     )
 
 
