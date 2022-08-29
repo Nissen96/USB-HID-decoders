@@ -37,6 +37,9 @@ python <script-name> <script-args>
 ### Keyboard
 
 Converts keyboard scan codes to a human readable format.
+```bash
+python keyboard_decode.py <usbdata.txt> [options]
+```
 
 Special keys are by default written out explicitly but can optionally be simulated with `--simulate`.
 
@@ -44,7 +47,12 @@ Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55
 
 ### Mouse
 
-Visualizes mouse movement. Button presses can be shown explicitly with `--clicks`.
+Visualizes mouse movement
+```bash
+python mouse_decode.py <usbdata.txt> [options]
+```
+
+Button presses can be shown explicitly with `--clicks`.
 
 **Modes**
 
@@ -75,6 +83,9 @@ python mouse_decode.py <mousedata-file> --mode 0 --clicks --speed 1
 ### Tablet
 
 Visualizes pen drawing on tablet.
+```bash
+python tablet_decode.py <usbdata.txt> [options]
+```
 
 **Modes**
 
