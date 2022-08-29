@@ -60,24 +60,9 @@ Button presses can be shown explicitly with `--clicks`.
 - 1: Show mouse movement only while any mouse button is held
 - 2: Show all mouse movements
 
-Moves and clicks can be animated by setting `--speed [1-10]`. Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`.
+Moves and clicks can be animated by setting `--speed [1-10]`. Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`. These options are especially helpful for visualizing screen keyboard usage or when drawing/writing with the mouse in the same spot multiple times.
 
 Colors indicate the mouse button(s) pressed when clicking/moving. Movement while no buttons are held is colored gray (in mode 2).
-
-**Examples**
-
-Display drawing/text made with mouse:
-
-```
-python mouse_decode.py <mousedata-file>
-```
-
-Visualize screen keyboard usage:
-
-```
-python mouse_decode.py <mousedata-file> --mode 0 --clicks --speed 1
-```
-(optionally mode 2 can be used to see movements in between clicks).
 
 
 ### Tablet
