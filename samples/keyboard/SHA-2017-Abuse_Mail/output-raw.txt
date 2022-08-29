@@ -1,1 +1,163 @@
-root<ENTER>Welcome123<ENTER>ls -la<ENTER>curl -ks https://root:Welcome123@intranet/secret.zip<ENTER>unzip secret.zip<ENTER>Pyj4m4P4rtY@2017<ENTER>cat secret.txt<ENTER>display hamburg<TAB><ENTER>logout<ENTER>
+r
+o
+o
+t
+<ENTER>
+<L_SHIFT> PRESSED
+w
+<L_SHIFT> RELEASED
+e
+l
+c
+o
+m
+e
+1
+2
+3
+<ENTER>
+l
+s
+ 
+-
+l
+a
+<ENTER>
+c
+u
+r
+l
+ 
+-
+k
+s
+ 
+h
+t
+t
+p
+s
+<L_SHIFT> PRESSED
+;
+<L_SHIFT> RELEASED
+/
+/
+r
+o
+o
+t
+<L_SHIFT> PRESSED
+;
+w
+<L_SHIFT> RELEASED
+e
+l
+c
+o
+m
+e
+1
+2
+3
+<L_SHIFT> PRESSED
+2
+<L_SHIFT> RELEASED
+i
+n
+t
+r
+a
+n
+e
+t
+/
+s
+e
+c
+r
+e
+t
+.
+z
+i
+p
+<ENTER>
+u
+n
+z
+i
+p
+ 
+s
+e
+c
+r
+e
+t
+.
+z
+i
+p
+<ENTER>
+<L_SHIFT> PRESSED
+p
+<L_SHIFT> RELEASED
+y
+j
+4
+m
+4
+<L_SHIFT> PRESSED
+p
+<L_SHIFT> RELEASED
+4
+r
+t
+<L_SHIFT> PRESSED
+y
+2
+<L_SHIFT> RELEASED
+2
+0
+1
+7
+<ENTER>
+c
+a
+t
+ 
+s
+e
+c
+r
+e
+t
+.
+t
+x
+t
+<ENTER>
+d
+i
+s
+p
+l
+a
+y
+ 
+h
+a
+m
+b
+u
+r
+g
+<TAB>
+<ENTER>
+l
+o
+g
+o
+u
+t
+<ENTER>

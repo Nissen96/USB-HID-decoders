@@ -1,1 +1,38 @@
-flag{pr355_0nwards_deafcb32}c
+f
+l
+a
+g
+<R_SHIFT> PRESSED
+[
+<R_SHIFT> RELEASED
+p
+r
+3
+5
+5
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+0
+n
+w
+a
+r
+d
+s
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+d
+e
+a
+f
+c
+b
+3
+2
+<R_SHIFT> PRESSED
+]
+<L_CTRL> PRESSED
+<R_SHIFT> RELEASED
+c

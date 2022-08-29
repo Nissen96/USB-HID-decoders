@@ -1,1 +1,227 @@
-notepad.exe<ENTER>Oh hi. You figured it out. Good job. I'm gonna go ahead and type a few things to make this pretty annoying so you can't just it <BACKSPACE><BACKSPACE><BACKSPACE>do it manually. Ok. That's enough. flag{usb_pcaps_are_fun}cq
+n
+o
+t
+e
+p
+a
+d
+.
+e
+x
+e
+<ENTER>
+<L_SHIFT> PRESSED
+o
+<L_SHIFT> RELEASED
+h
+ 
+h
+i
+.
+ 
+<L_SHIFT> PRESSED
+y
+<L_SHIFT> RELEASED
+o
+u
+ 
+f
+i
+g
+u
+r
+e
+d
+ 
+i
+t
+ 
+o
+u
+t
+.
+ 
+<R_SHIFT> PRESSED
+g
+<R_SHIFT> RELEASED
+o
+o
+d
+ 
+j
+o
+b
+.
+ 
+<L_SHIFT> PRESSED
+i
+<L_SHIFT> RELEASED
+'
+m
+ 
+g
+o
+n
+n
+a
+ 
+g
+o
+ 
+a
+h
+e
+a
+d
+ 
+a
+n
+d
+ 
+t
+y
+p
+e
+ 
+a
+ 
+f
+e
+w
+ 
+t
+h
+i
+n
+g
+s
+ 
+t
+o
+ 
+m
+a
+k
+e
+ 
+t
+h
+i
+s
+ 
+p
+r
+e
+t
+t
+y
+ 
+a
+n
+n
+o
+y
+i
+n
+g
+ 
+s
+o
+ 
+y
+o
+u
+ 
+c
+a
+n
+'
+t
+ 
+j
+u
+s
+t
+ 
+i
+t
+ 
+<BACKSPACE>
+<BACKSPACE>
+<BACKSPACE>
+d
+o
+ 
+i
+t
+ 
+m
+a
+n
+u
+a
+l
+l
+y
+.
+ 
+<L_SHIFT> PRESSED
+o
+<L_SHIFT> RELEASED
+k
+.
+ 
+<R_SHIFT> PRESSED
+t
+<R_SHIFT> RELEASED
+h
+a
+t
+'
+s
+ 
+e
+n
+o
+u
+g
+h
+.
+ 
+f
+l
+a
+g
+<L_SHIFT> PRESSED
+[
+<L_SHIFT> RELEASED
+u
+s
+b
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+p
+c
+a
+p
+s
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+a
+r
+e
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+f
+u
+n
+<L_SHIFT> PRESSED
+]
+<L_CTRL> PRESSED
+<L_SHIFT> RELEASED
+c
+<L_CTRL> RELEASED
+q

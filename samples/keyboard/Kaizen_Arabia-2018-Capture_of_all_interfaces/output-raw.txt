@@ -1,1 +1,46 @@
-here is your flag SAFCSP{eat_that_frog}
+h
+e
+r
+e
+ 
+i
+s
+ 
+y
+o
+u
+r
+ 
+f
+l
+a
+g
+ 
+<R_SHIFT> PRESSED
+s
+a
+f
+c
+s
+p
+[
+<R_SHIFT> RELEASED
+e
+a
+t
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+t
+h
+a
+t
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+f
+r
+o
+g
+<R_SHIFT> PRESSED
+]

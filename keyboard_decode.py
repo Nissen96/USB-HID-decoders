@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import pathlib
 import sys
 
 
@@ -68,13 +67,28 @@ KEY_CODES = {
     0x52: ('<UP>',),
 }
 
+MODIFIER_CODES = {
+    0x01: '<L_CTRL>',
+    0x02: '<L_SHIFT>',
+    0x04: '<L_ALT>',
+    0x08: '<L_META',
+    0x10: '<R_CTRL>',
+    0x20: '<R_SHIFT>',
+    0x40: '<R_ALT>',
+    0x80: '<R_META>'
+}
+
 
 def simulate_keypresses(keypresses):
     output = [[]]
     capslock = False
     pos = 0
     line = 0
-    for key, shift in keypresses:
+
+    for modifiers, key in keypresses:
+        # Shift pressed? Right ALT is used on many European keyboard layouts for some of the same symbols SHIFT is on US layout (e.g. @, $)
+        shift = any(m in modifiers for m in ('<L_SHIFT>', '<R_SHIFT>', '<R_ALT>'))
+
         match key[0]:
             case '<ENTER>':
                 line += 1
@@ -98,7 +112,7 @@ def simulate_keypresses(keypresses):
                 pos = 0
             case '<DELETE>':
                 if pos < len(output[line]):
-                    output[line].pop()
+                    output[line].pop(pos)
                 elif line < len(output) - 1:
                     output[line].extend(output[line + 1])
                     output.pop(line)
@@ -131,6 +145,25 @@ def simulate_keypresses(keypresses):
     return '\n'.join([''.join(line) for line in output])
 
 
+def format_keypresses(keypresses):
+    keys = []
+    current_modifiers = set()
+    for modifiers, key in keypresses:
+        # Add pressed modifier keys
+        for modifier in modifiers - current_modifiers:
+            keys.append(f"{modifier} PRESSED")
+
+        # Add released modifier keys
+        for modifier in current_modifiers - modifiers:
+            keys.append(f"{modifier} RELEASED")
+
+        current_modifiers = modifiers
+
+        keys.append(key[0])
+
+    return "\n".join(keys)
+
+
 def decode_keypresses(raw_data, simulate=False):
     keyboard_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
 
@@ -140,26 +173,25 @@ def decode_keypresses(raw_data, simulate=False):
         if skip_next:
             skip_next = False
             continue
-        
-        shift = int(line[0:2], 16) in (0x02, 0x20)
+
+        modifier = int(line[:2], 16)
         keycode = int(line[4:6], 16)
 
         if keycode == 0 or int(line[6:8], 16) != 0:
             continue
-        
+
         if keycode not in KEY_CODES:
             print(f'Unrecognized keycode: {hex(keycode)}, please lookup USB HID keyboard scan codes!')
             continue
-        
-        if shift:
+
+        if modifier != 0:
             skip_next = True
-        
-        keypresses.append((KEY_CODES[keycode], shift))
- 
-    if simulate:
-        return simulate_keypresses(keypresses)
-    
-    return ''.join([key[-shift] for key, shift in keypresses])
+
+        modifiers = {m for code, m in MODIFIER_CODES.items() if modifier & code == code}
+
+        keypresses.append((modifiers, KEY_CODES[keycode]))
+
+    return simulate_keypresses(keypresses) if simulate else format_keypresses(keypresses)
 
 
 def parse_args():

@@ -1,1 +1,545 @@
-redeagle@aszt<BACKSPACE><BACKSPACE>tzk.gov.hkn<TAB>Mission Successful!<TAB>General Red Eagle!<ENTER>We have successfully deployed NotYepta and taken down major parts of Kolechia's infrastructure.<ENTER>They will be an easy target now and we are almost ready for the physical attack.<ENTER>In case the worm sper<BACKSPACE><BACKSPACE>reads to our internal networks through any communications channel from Kolechia, our data can be recovered with the decryption key <CAPS LOCK>ddc<CAPS LOCK>{f1l3_3ncryptio<BACKSPACE><BACKSPACE><BACKSPACE>710n_b3_<CAPS LOCK>g0ne<CAPS LOCK>}<ENTER><ENTER>We are ready to attack on your command!<ENTER><ENTER><CAPS LOCK>glory to arstotzka!<CAPS LOCK>
+r
+e
+d
+e
+a
+g
+l
+e
+<L_SHIFT> PRESSED
+2
+<L_SHIFT> RELEASED
+a
+s
+z
+t
+<BACKSPACE>
+<BACKSPACE>
+t
+z
+k
+.
+g
+o
+v
+.
+h
+k
+n
+<TAB>
+<L_SHIFT> PRESSED
+m
+<L_SHIFT> RELEASED
+i
+s
+s
+i
+o
+n
+ 
+<L_SHIFT> PRESSED
+s
+<L_SHIFT> RELEASED
+u
+c
+c
+e
+s
+s
+f
+u
+l
+<L_SHIFT> PRESSED
+1
+<L_SHIFT> RELEASED
+<TAB>
+<L_SHIFT> PRESSED
+g
+<L_SHIFT> RELEASED
+e
+n
+e
+r
+a
+l
+ 
+<L_SHIFT> PRESSED
+r
+<L_SHIFT> RELEASED
+e
+d
+ 
+<L_SHIFT> PRESSED
+e
+<L_SHIFT> RELEASED
+a
+g
+l
+e
+<L_SHIFT> PRESSED
+1
+<L_SHIFT> RELEASED
+<ENTER>
+<L_SHIFT> PRESSED
+w
+<L_SHIFT> RELEASED
+e
+ 
+h
+a
+v
+e
+ 
+s
+u
+c
+c
+e
+s
+s
+f
+u
+l
+l
+y
+ 
+d
+e
+p
+l
+o
+y
+e
+d
+ 
+<L_SHIFT> PRESSED
+n
+<L_SHIFT> RELEASED
+o
+t
+<L_SHIFT> PRESSED
+y
+<L_SHIFT> RELEASED
+e
+p
+t
+a
+ 
+a
+n
+d
+ 
+t
+a
+k
+e
+n
+ 
+d
+o
+w
+n
+ 
+m
+a
+j
+o
+r
+ 
+p
+a
+r
+t
+s
+ 
+o
+f
+ 
+<L_SHIFT> PRESSED
+k
+<L_SHIFT> RELEASED
+o
+l
+e
+c
+h
+i
+a
+'
+s
+ 
+i
+n
+f
+r
+a
+s
+t
+r
+u
+c
+t
+u
+r
+e
+.
+<ENTER>
+<L_SHIFT> PRESSED
+t
+<L_SHIFT> RELEASED
+h
+e
+y
+ 
+w
+i
+l
+l
+ 
+b
+e
+ 
+a
+n
+ 
+e
+a
+s
+y
+ 
+t
+a
+r
+g
+e
+t
+ 
+n
+o
+w
+ 
+a
+n
+d
+ 
+w
+e
+ 
+a
+r
+e
+ 
+a
+l
+m
+o
+s
+t
+ 
+r
+e
+a
+d
+y
+ 
+f
+o
+r
+ 
+t
+h
+e
+ 
+p
+h
+y
+s
+i
+c
+a
+l
+ 
+a
+t
+t
+a
+c
+k
+.
+<ENTER>
+<L_SHIFT> PRESSED
+i
+<L_SHIFT> RELEASED
+n
+ 
+c
+a
+s
+e
+ 
+t
+h
+e
+ 
+w
+o
+r
+m
+ 
+s
+p
+e
+r
+<BACKSPACE>
+<BACKSPACE>
+r
+e
+a
+d
+s
+ 
+t
+o
+ 
+o
+u
+r
+ 
+i
+n
+t
+e
+r
+n
+a
+l
+ 
+n
+e
+t
+w
+o
+r
+k
+s
+ 
+t
+h
+r
+o
+u
+g
+h
+ 
+a
+n
+y
+ 
+c
+o
+m
+m
+u
+n
+i
+c
+a
+t
+i
+o
+n
+s
+ 
+c
+h
+a
+n
+n
+e
+l
+ 
+f
+r
+o
+m
+ 
+<L_SHIFT> PRESSED
+k
+<L_SHIFT> RELEASED
+o
+l
+e
+c
+h
+i
+a
+,
+ 
+o
+u
+r
+ 
+d
+a
+t
+a
+ 
+c
+a
+n
+ 
+b
+e
+ 
+r
+e
+c
+o
+v
+e
+r
+e
+d
+ 
+w
+i
+t
+h
+ 
+t
+h
+e
+ 
+d
+e
+c
+r
+y
+p
+t
+i
+o
+n
+ 
+k
+e
+y
+ 
+<CAPS LOCK>
+d
+d
+c
+<CAPS LOCK>
+<L_SHIFT> PRESSED
+[
+<L_SHIFT> RELEASED
+f
+1
+l
+3
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+3
+n
+c
+r
+y
+p
+t
+i
+o
+<BACKSPACE>
+<BACKSPACE>
+<BACKSPACE>
+7
+1
+0
+n
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+b
+3
+<L_SHIFT> PRESSED
+-
+<L_SHIFT> RELEASED
+<CAPS LOCK>
+g
+0
+n
+e
+<CAPS LOCK>
+<L_SHIFT> PRESSED
+]
+<L_SHIFT> RELEASED
+<ENTER>
+<ENTER>
+<L_SHIFT> PRESSED
+w
+<L_SHIFT> RELEASED
+e
+ 
+a
+r
+e
+ 
+r
+e
+a
+d
+y
+ 
+t
+o
+ 
+a
+t
+t
+a
+c
+k
+ 
+o
+n
+ 
+y
+o
+u
+r
+ 
+c
+o
+m
+m
+a
+n
+d
+<L_SHIFT> PRESSED
+1
+<L_SHIFT> RELEASED
+<ENTER>
+<ENTER>
+<CAPS LOCK>
+g
+l
+o
+r
+y
+ 
+t
+o
+ 
+a
+r
+s
+t
+o
+t
+z
+k
+a
+<L_SHIFT> PRESSED
+1
+<L_SHIFT> RELEASED
+<CAPS LOCK>

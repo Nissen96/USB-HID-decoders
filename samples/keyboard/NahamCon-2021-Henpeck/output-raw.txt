@@ -1,1 +1,74 @@
-so the answer is flag{f7733e0093b7d281dd0a30fcf34a9634} hahahah lol<ENTER>c
+s
+o
+ 
+t
+h
+e
+ 
+a
+n
+s
+w
+e
+r
+ 
+i
+s
+ 
+f
+l
+a
+g
+<L_SHIFT> PRESSED
+[
+<L_SHIFT> RELEASED
+f
+7
+7
+3
+3
+e
+0
+0
+9
+3
+b
+7
+d
+2
+8
+1
+d
+d
+0
+a
+3
+0
+f
+c
+f
+3
+4
+a
+9
+6
+3
+4
+<L_SHIFT> PRESSED
+]
+<L_SHIFT> RELEASED
+ 
+h
+a
+h
+a
+h
+a
+h
+ 
+l
+o
+l
+<ENTER>
+<L_CTRL> PRESSED
+c

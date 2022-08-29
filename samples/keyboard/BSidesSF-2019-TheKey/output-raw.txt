@@ -1,1 +1,113 @@
-vi flag.ttxt<ENTER>iThe flag is ctf<ESC>vbUA{my_favorite_editor_is_vim}<ESC>hhhhhhhhhhhhhhhhhhhau<ESC>vi{U<ESC>:wq<ENTER><TAB>
+v
+i
+ 
+f
+l
+a
+g
+.
+t
+t
+x
+t
+<ENTER>
+i
+<R_SHIFT> PRESSED
+t
+<R_SHIFT> RELEASED
+h
+e
+ 
+f
+l
+a
+g
+ 
+i
+s
+ 
+c
+t
+f
+<ESC>
+v
+b
+<R_SHIFT> PRESSED
+u
+a
+[
+<R_SHIFT> RELEASED
+m
+y
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+f
+a
+v
+o
+r
+i
+t
+e
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+e
+d
+i
+t
+o
+r
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+i
+s
+<R_SHIFT> PRESSED
+-
+<R_SHIFT> RELEASED
+v
+i
+m
+<R_SHIFT> PRESSED
+]
+<R_SHIFT> RELEASED
+<ESC>
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+a
+u
+<ESC>
+v
+i
+<R_SHIFT> PRESSED
+[
+u
+<R_SHIFT> RELEASED
+<ESC>
+<R_SHIFT> PRESSED
+;
+<R_SHIFT> RELEASED
+w
+q
+<ENTER>
+<L_ALT> PRESSED
+<TAB>
