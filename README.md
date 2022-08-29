@@ -67,7 +67,7 @@ python mouse_decode.py <mousedata-file>
 Visualize screen keyboard usage:
 
 ```
-python mouse_decode.py <mousedata-file> --mode 0 --clicks --animate
+python mouse_decode.py <mousedata-file> --mode 0 --clicks --speed 1
 ```
 (optionally mode 2 can be used to see movements in between clicks).
 
