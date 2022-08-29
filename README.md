@@ -72,6 +72,19 @@ python mouse_decode.py <mousedata-file> --mode 0 --clicks --speed 1
 (optionally mode 2 can be used to see movements in between clicks).
 
 
+### Tablet
+
+Visualizes pen drawing on tablet.
+
+**Modes**
+
+- 1: Show pen movement only on pen click
+- 2: Show all pen movements
+
+Animate drawing by setting `--speed [1-10]`. Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`.
+
+Color indicates drawing while holding pen button. Pen movement with no buttons held is colored gray (in mode 2).
+
 ## PCAP Extraction
 
 USB HID data can be extracted from a packet capture with `tshark`, the CLI of Wireshark. In Wireshark, the relevant data is stored in the field `usb.capdata` (Leftover Capture Data) or `usbhid.data` (HID Data). Extract with
