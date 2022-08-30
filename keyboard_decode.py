@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import time
 import sys
 
 
@@ -44,7 +45,7 @@ SCAN_CODES = {
     0x29: ('ESC',),
     0x2A: ('BACKSPACE',),
     0x2B: ('TAB',),
-    0x2C: (' ', ' '),
+    0x2C: ('SPACE',),
     0x2D: ('-', '_'),
     0x2E: ('=', '+'),
     0x2F: ('[', '{'),
@@ -69,16 +70,57 @@ SCAN_CODES = {
     0x52: ('UP',),
 } | {0x3A + i: f'<F{i + 1}>' for i in range(12)}
 
+# Map code to id, printed name, and pyautogui name
 MODIFIER_CODES = {
-    0x01: ('L_CTRL', 'Ctrl'),
-    0x02: ('L_SHIFT', 'Shift'),
-    0x04: ('L_ALT', 'Alt'),
-    0x08: ('L_GUI', 'GUI'),
-    0x10: ('R_CTRL', 'Ctrl'),
-    0x20: ('R_SHIFT', 'Shift'),
-    0x40: ('R_ALT', 'AltGr'),
-    0x80: ('R_GUI', 'GUI')
+    0x01: ('L_CTRL', 'Ctrl', 'controlleft'),
+    0x02: ('L_SHIFT', 'Shift', 'shiftleft'),
+    0x04: ('L_ALT', 'Alt', 'altleft'),
+    0x08: ('L_GUI', 'GUI', 'winleft'),
+    0x10: ('R_CTRL', 'Ctrl', 'controlright'),
+    0x20: ('R_SHIFT', 'Shift', 'shiftright'),
+    0x40: ('R_ALT', 'AltGr', 'altright'),
+    0x80: ('R_GUI', 'GUI', 'winright')
 }
+
+
+def replay_keypresses(keypresses, delay=0):
+    import keyboard
+    import os
+    import signal
+
+    try:
+        import pyautogui
+    except KeyError:
+        print('Replay mode requires a GUI display')
+
+    # Force quit on q and sigint (e.g. Ctrl+C)
+    keyboard.on_press_key('q', lambda _: os._exit(0))
+    signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
+
+    print('Please open the program you want the keystrokes to be replayed in (e.g. notepad, terminal, ...)')
+    print('Press <SPACE> in that window to start')
+    keyboard.wait('space')
+    pyautogui.press('backspace')
+    time.sleep(0.1)
+
+    current_modifiers = set()
+    
+    for modifiers, key in keypresses:
+        for modifier in modifiers - current_modifiers:
+            pyautogui.keyDown(modifier[2])
+
+        for modifier in current_modifiers - modifiers:
+            pyautogui.keyUp(modifier[2])
+
+        current_modifiers = modifiers
+
+        pyautogui.press(key[0].lower().replace(' ', ''))
+        if key[0] == 'ENTER':
+            time.sleep(0.5)
+    
+    # Make sure to release any modifier keys still held
+    for modifier in current_modifiers:
+        pyautogui.keyUp(modifier[2])
 
 
 def simulate_keypresses(keypresses):
@@ -105,6 +147,9 @@ def simulate_keypresses(keypresses):
         shift = len(key_combo & {'Shift', 'AltGr'}) > 0
 
         match key[0]:
+            case 'SPACE':
+                output[line].insert(pos, ' ')
+                pos += 1
             case 'ENTER':
                 line += 1
                 pos = 0
@@ -160,7 +205,7 @@ def simulate_keypresses(keypresses):
     return '\n'.join([''.join(line) for line in output])
 
 
-def format_keypresses(keypresses):
+def format_raw_keypresses(keypresses):
     keys = []
     current_modifiers = set()
     for modifiers, key in keypresses:
@@ -180,7 +225,7 @@ def format_keypresses(keypresses):
     return '\n'.join(keys)
 
 
-def decode_keypresses(raw_data, simulate=False):
+def decode_keypresses(raw_data):
     keyboard_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
 
     keypresses = []
@@ -200,25 +245,43 @@ def decode_keypresses(raw_data, simulate=False):
             modifiers = {m for code, m in MODIFIER_CODES.items() if modifier & code == code}
 
             keypresses.append((modifiers, SCAN_CODES[scan_code]))
-
-    return simulate_keypresses(keypresses) if simulate else format_keypresses(keypresses)
+    
+    return keypresses
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Decode USB Keyboard HID data')
+    parser = argparse.ArgumentParser(
+        description='Decode USB Keyboard HID data',
+        epilog='''Simulation mode will in most cases provide a similar result to the original input, but is limited and assumes US layout.
+Key combos, text selection, and some special keys are not simulated, but instead written out explicitly (e.g. <Ctrl+c>, <Alt+TAB>, <Shift+LEFT>, <ESC>).
+If needed, use raw mode to list all keystrokes separately.
+Replay mode automates this replaying on your machine, using the current keyboard layout. NEVER use this for untrusted input!
+  NOTE: Shift + arrow keys do not work on Windows 10 in replay mode - this is a known issue in multiple keyboard modules
+Press q to force quit anytime mid-simulation.
+''',
+        formatter_class=argparse.RawTextHelpFormatter
+    )
     parser.add_argument('file', type=argparse.FileType('r'), help='keyboard data file')
     parser.add_argument('-o', '--output', type=argparse.FileType('w'), help='output file', default=sys.stdout)
-    parser.add_argument('-s', '--simulate', action='store_true', help='simulate keypresses')
+    parser.add_argument('-m', '--mode', choices=('raw', 'simulate', 'replay'), default='simulate', help='''keystroke output mode (default: %(default)s)
+  raw: output each keystroke on a separate line
+  simulate: output a simulation of the keystrokes (safe)
+  replay: play back each keystroke directly on your machine (unsafe)''')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    keypresses = decode_keypresses(args.file.read(), simulate=args.simulate)
-    if args.output:
-        args.output.write(keypresses)
-    else:
-        print(keypresses)
+    keypresses = decode_keypresses(args.file.read())
+    
+    if args.mode == 'raw':
+        output = format_raw_keypresses(keypresses)
+        args.output.write(output) if args.output else print(output)
+    elif args.mode == 'simulate':
+        output = simulate_keypresses(keypresses)
+        args.output.write(output) if args.output else print(output)
+    elif args.mode == 'replay':
+        return replay_keypresses(keypresses)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@ Test decoding scripts against expected output
 '''
 import unittest
 from pathlib import Path
-from keyboard_decode import decode_keypresses
+from keyboard_decode import decode_keypresses, format_raw_keypresses, simulate_keypresses
 
 
 root = Path('.')
@@ -15,7 +15,7 @@ Expected
 {top_rule}
 Decoded
 {mid_rule}
-{{decoded}}
+{{output}}
 '''.format(top_rule='~' * border_length, mid_rule='-' * border_length)
 
 
@@ -28,16 +28,18 @@ class KeyboardTest(unittest.TestCase):
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-raw.txt') as g:
                     expected = g.read()
-                    decoded = decode_keypresses(f.read())
-                    self.assertEqual(expected, decoded, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, decoded=decoded)}')
+                    keypresses = decode_keypresses(f.read())
+                    output = format_raw_keypresses(keypresses)
+                    self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
     
     def test_simulated_output(self):
         for ctf in (root / 'samples' / 'keyboard').iterdir():
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-simulated.txt') as g:
                     expected = g.read()
-                    decoded = decode_keypresses(f.read(), simulate=True)
-                    self.assertEqual(expected, decoded, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, decoded=decoded)}')
+                    keypresses = decode_keypresses(f.read())
+                    output = simulate_keypresses(keypresses)
+                    self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
 
 
 if __name__ == '__main__':

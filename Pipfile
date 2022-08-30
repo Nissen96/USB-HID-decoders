@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 matplotlib = "*"
 keyboard = "*"
+pyautogui = "*"
 
 [dev-packages]
 

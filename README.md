@@ -41,12 +41,20 @@ Converts keyboard scan codes to a human readable format.
 python keyboard_decode.py <usbdata.txt> [options]
 ```
 
-By default, all keypresses are written out explicitly, each on a separate line, including the press and release of modifier keys (`CTRL`, `SHIFT`, `ALT`,  `GUI`).
+**Modes**
 
-Use `--simulate` to simulate keypresses. This handles most key codes and `SHIFT` and will likely produce the expected output. Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but instead written explicitly. 
+- `raw`: Output each keypress explicitly on a separate line, including the press and release of modifier keys (`CTRL`, `SHIFT`, `ALT`,  `WIN`).
+- `simulate`: Simulate the keypresses as if written in a text editor with a US-keyboard.
+- `replay`: Replay keypresses on the actual machine in the current window (unsafe!).
+
+`simulate` mode is default and will likely produce the expected output. It handles most scan codes and `Shift`. Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but written explicitly. 
 
 If the capture is from a non-US keyboard layout, the simulation may produce partially incorrect results.
-In that case, stick with the default raw output, set your keyboard layout correctly, and simulate the keypresses manually in a text editor.
+In that case, use `raw` mode, set your keyboard layout correctly, and simulate the keypresses manually in a text editor.
+
+Optionally, use `replay` mode to simulate the keypresses automatically. *Never* use this mode on untrusted input, it will type whatever was typed during the capture, including any commands, shortcuts, etc. so make sure to first inspect the output from the raw and simulated modes.
+
+Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout) but in `replay` mode, `<Shift + arrow key>` does not select text on Windows 10. This is a known bug in the underlying keybord library (both `keyboard` and `pyautogui`).
 
 Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
 

@@ -1,7 +1,7 @@
 v
 i
 m
- 
+<SPACE>
 f
 l
 a
@@ -17,15 +17,15 @@ t
 <R_SHIFT> RELEASED
 h
 e
- 
+<SPACE>
 f
 l
 a
 g
- 
+<SPACE>
 i
 s
- 
+<SPACE>
 c
 t
 f

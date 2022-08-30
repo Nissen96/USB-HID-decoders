@@ -18,7 +18,7 @@ e
 <ENTER>
 l
 s
- 
+<SPACE>
 -
 l
 a
@@ -27,11 +27,11 @@ c
 u
 r
 l
- 
+<SPACE>
 -
 k
 s
- 
+<SPACE>
 h
 t
 t
@@ -87,7 +87,7 @@ n
 z
 i
 p
- 
+<SPACE>
 s
 e
 c
@@ -125,7 +125,7 @@ y
 c
 a
 t
- 
+<SPACE>
 s
 e
 c
@@ -144,7 +144,7 @@ p
 l
 a
 y
- 
+<SPACE>
 h
 a
 m

@@ -2,20 +2,20 @@ h
 e
 r
 e
- 
+<SPACE>
 i
 s
- 
+<SPACE>
 y
 o
 u
 r
- 
+<SPACE>
 f
 l
 a
 g
- 
+<SPACE>
 <R_SHIFT> PRESSED
 s
 a

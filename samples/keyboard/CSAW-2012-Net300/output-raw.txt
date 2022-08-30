@@ -6,7 +6,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -16,7 +16,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -34,7 +34,7 @@ e
 c
 h
 o
- 
+<SPACE>
 k
 <ENTER>
 <R_GUI> PRESSED
@@ -45,7 +45,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -55,7 +55,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -74,7 +74,7 @@ e
 c
 h
 o
- 
+<SPACE>
 e
 <ENTER>
 <R_GUI> PRESSED
@@ -85,7 +85,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -95,7 +95,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -115,7 +115,7 @@ e
 c
 h
 o
- 
+<SPACE>
 y
 <ENTER>
 <R_GUI> PRESSED
@@ -126,7 +126,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -136,7 +136,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -156,7 +156,7 @@ e
 c
 h
 o
- 
+<SPACE>
 <L_SHIFT> PRESSED
 [
 <L_SHIFT> RELEASED
@@ -169,7 +169,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -179,7 +179,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -199,7 +199,7 @@ e
 c
 h
 o
- 
+<SPACE>
 c
 <ENTER>
 <R_GUI> PRESSED
@@ -210,7 +210,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -220,7 +220,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -240,7 +240,7 @@ e
 c
 h
 o
- 
+<SPACE>
 4
 <ENTER>
 <R_GUI> PRESSED
@@ -251,7 +251,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -261,7 +261,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -281,7 +281,7 @@ e
 c
 h
 o
- 
+<SPACE>
 8
 <ENTER>
 <R_GUI> PRESSED
@@ -292,7 +292,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -302,7 +302,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -322,7 +322,7 @@ e
 c
 h
 o
- 
+<SPACE>
 b
 <ENTER>
 <R_GUI> PRESSED
@@ -333,7 +333,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -343,7 +343,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -363,7 +363,7 @@ e
 c
 h
 o
- 
+<SPACE>
 a
 <ENTER>
 <R_GUI> PRESSED
@@ -374,7 +374,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -384,7 +384,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -404,7 +404,7 @@ e
 c
 h
 o
- 
+<SPACE>
 9
 <ENTER>
 <R_GUI> PRESSED
@@ -415,7 +415,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -425,7 +425,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -444,7 +444,7 @@ e
 c
 h
 o
- 
+<SPACE>
 9
 <ENTER>
 <R_GUI> PRESSED
@@ -455,7 +455,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -465,7 +465,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -485,7 +485,7 @@ e
 c
 h
 o
- 
+<SPACE>
 3
 <ENTER>
 <R_GUI> PRESSED
@@ -496,7 +496,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -506,7 +506,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -527,7 +527,7 @@ e
 c
 h
 o
- 
+<SPACE>
 d
 <ENTER>
 <R_GUI> PRESSED
@@ -538,7 +538,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -548,7 +548,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -569,7 +569,7 @@ e
 c
 h
 o
- 
+<SPACE>
 3
 <ENTER>
 <R_GUI> PRESSED
@@ -580,7 +580,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -590,7 +590,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -611,7 +611,7 @@ e
 c
 h
 o
- 
+<SPACE>
 5
 <ENTER>
 <R_GUI> PRESSED
@@ -622,7 +622,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -632,7 +632,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -653,7 +653,7 @@ e
 c
 h
 o
- 
+<SPACE>
 c
 <ENTER>
 <R_GUI> PRESSED
@@ -664,7 +664,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -674,7 +674,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -695,7 +695,7 @@ e
 c
 h
 o
- 
+<SPACE>
 3
 <ENTER>
 <R_GUI> PRESSED
@@ -706,7 +706,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -716,7 +716,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -737,7 +737,7 @@ e
 c
 h
 o
- 
+<SPACE>
 a
 <ENTER>
 <R_GUI> PRESSED
@@ -748,7 +748,7 @@ t
 e
 r
 m
- 
+<SPACE>
 -
 g
 e
@@ -758,7 +758,7 @@ e
 t
 r
 y
- 
+<SPACE>
 1
 2
 x
@@ -779,7 +779,7 @@ e
 c
 h
 o
- 
+<SPACE>
 <L_SHIFT> PRESSED
 ]
 <L_SHIFT> RELEASED

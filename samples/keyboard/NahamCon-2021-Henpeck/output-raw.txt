@@ -1,20 +1,20 @@
 s
 o
- 
+<SPACE>
 t
 h
 e
- 
+<SPACE>
 a
 n
 s
 w
 e
 r
- 
+<SPACE>
 i
 s
- 
+<SPACE>
 f
 l
 a
@@ -57,7 +57,7 @@ a
 <L_SHIFT> PRESSED
 ]
 <L_SHIFT> RELEASED
- 
+<SPACE>
 h
 a
 h
@@ -65,7 +65,7 @@ a
 h
 a
 h
- 
+<SPACE>
 l
 o
 l
