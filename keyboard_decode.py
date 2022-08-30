@@ -68,15 +68,15 @@ SCAN_CODES = {
     0x50: ('LEFT',),
     0x51: ('DOWN',),
     0x52: ('UP',),
-} | {0x3A + i: f'<F{i + 1}>' for i in range(12)}
+} | {0x3A + i: f'F{i + 1}' for i in range(12)}
 
 # Map code to id, printed name, and pyautogui name
 MODIFIER_CODES = {
-    0x01: ('L_CTRL', 'Ctrl', 'controlleft'),
+    0x01: ('L_CTRL', 'Ctrl', 'ctrlleft'),
     0x02: ('L_SHIFT', 'Shift', 'shiftleft'),
     0x04: ('L_ALT', 'Alt', 'altleft'),
     0x08: ('L_GUI', 'GUI', 'winleft'),
-    0x10: ('R_CTRL', 'Ctrl', 'controlright'),
+    0x10: ('R_CTRL', 'Ctrl', 'ctrlright'),
     0x20: ('R_SHIFT', 'Shift', 'shiftright'),
     0x40: ('R_ALT', 'AltGr', 'altright'),
     0x80: ('R_GUI', 'GUI', 'winright')
@@ -99,28 +99,21 @@ def replay_keypresses(keypresses, delay=0):
 
     print('Please open the program you want the keystrokes to be replayed in (e.g. notepad, terminal, ...)')
     print('Press <SPACE> in that window to start')
-    keyboard.wait('space')
-    pyautogui.press('backspace')
+    keyboard.wait('space', suppress=True)
     time.sleep(0.1)
 
-    current_modifiers = set()
-    
     for modifiers, key in keypresses:
-        for modifier in modifiers - current_modifiers:
-            pyautogui.keyDown(modifier[2])
-
-        for modifier in current_modifiers - modifiers:
-            pyautogui.keyUp(modifier[2])
-
-        current_modifiers = modifiers
-
-        pyautogui.press(key[0].lower().replace(' ', ''))
-        if key[0] == 'ENTER':
-            time.sleep(0.5)
-    
-    # Make sure to release any modifier keys still held
-    for modifier in current_modifiers:
-        pyautogui.keyUp(modifier[2])
+        modifier_names = {m[2] for m in modifiers}
+        
+        # Workaround for <Shift+Arrow Keys> not working correctly in Win10 - let users do this manually
+        if len(modifier_names) > 0 and len(modifier_names - {'shiftleft', 'shiftright'}) == 0 and key[0] in {'RIGHT', 'LEFT', 'DOWN', 'UP'}:
+            print(f'Please press <Shift+{key[0]}> manually...')
+            keyboard.wait(f'shift+{key[0].lower()} arrow')
+            time.sleep(1)
+        else:
+            pyautogui.hotkey(*modifier_names, key[0].lower().replace(' ', ''))
+            if key[0] == 'ENTER':
+                time.sleep(0.5)
 
 
 def simulate_keypresses(keypresses):
@@ -151,9 +144,14 @@ def simulate_keypresses(keypresses):
                 output[line].insert(pos, ' ')
                 pos += 1
             case 'ENTER':
+                output.insert(line + 1, [])
+
+                # If mid-line, move remainder of line down to start of new line
+                output[line + 1].extend(output[line][pos:])
+                del output[line][pos:]
+                
                 line += 1
                 pos = 0
-                output.insert(line, [])
             case 'BACKSPACE':
                 if pos > 0:
                     pos -= 1
@@ -256,7 +254,8 @@ def parse_args():
 Key combos, text selection, and some special keys are not simulated, but instead written out explicitly (e.g. <Ctrl+c>, <Alt+TAB>, <Shift+LEFT>, <ESC>).
 If needed, use raw mode to list all keystrokes separately.
 Replay mode automates this replaying on your machine, using the current keyboard layout. NEVER use this for untrusted input!
-  NOTE: Shift + arrow keys do not work on Windows 10 in replay mode - this is a known issue in multiple keyboard modules
+  NOTE: In replay mode, <Shift+ArrowKey> does not select text due to a known issue in the underlying libraries.
+        As a workaround, the program will stop and ask you to manually press these keys before taking over automatically.
 Press q to force quit anytime mid-simulation.
 ''',
         formatter_class=argparse.RawTextHelpFormatter
