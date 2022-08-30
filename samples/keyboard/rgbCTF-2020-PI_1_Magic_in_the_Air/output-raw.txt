@@ -71,12 +71,14 @@ r
 k
 i
 n
-n
+g
+h
 <ENTER>
 <ENTER>
 y
 e
 a
+h
  
 i
 t
@@ -133,6 +135,7 @@ a
 k
 i
 n
+g
  
 o
 f
@@ -371,7 +374,7 @@ a
  
 s
 w
-w
+e
 e
 d
 i
@@ -494,7 +497,6 @@ h
 i
 t
 s
- 
  
 d
 o

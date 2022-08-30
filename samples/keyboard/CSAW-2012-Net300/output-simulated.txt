@@ -1,38 +1,38 @@
-rxterm -geometry 12x1+0+0
+<GUI+r>xterm -geometry 12x1+0+0
 echo k
-rxterm -geometry 12x1+75+0
+<GUI+r>xterm -geometry 12x1+75+0
 echo e
-rxterm -geometry 12x1+150+0
+<GUI+r>xterm -geometry 12x1+150+0
 echo y
-rxterm -geometry 12x1+225+0
+<GUI+r>xterm -geometry 12x1+225+0
 echo {
-rxterm -geometry 12x1+300+0
+<GUI+r>xterm -geometry 12x1+300+0
 echo c
-rxterm -geometry 12x1+375+0
+<GUI+r>xterm -geometry 12x1+375+0
 echo 4
-rxterm -geometry 12x1+450+0
+<GUI+r>xterm -geometry 12x1+450+0
 echo 8
-rxterm -geometry 12x1+525+0
+<GUI+r>xterm -geometry 12x1+525+0
 echo b
-rxterm -geometry 12x1+600+0
+<GUI+r>xterm -geometry 12x1+600+0
 echo a
-rxterm -geometry 12x1+675+0
+<GUI+r>xterm -geometry 12x1+675+0
 echo 9
-rxterm -geometry 12x1+0+40
+<GUI+r>xterm -geometry 12x1+0+40
 echo 9
-rxterm -geometry 12x1+75+40
+<GUI+r>xterm -geometry 12x1+75+40
 echo 3
-rxterm -geometry 12x1+150+40
+<GUI+r>xterm -geometry 12x1+150+40
 echo d
-rxterm -geometry 12x1+225+40
+<GUI+r>xterm -geometry 12x1+225+40
 echo 3
-rxterm -geometry 12x1+300+40
+<GUI+r>xterm -geometry 12x1+300+40
 echo 5
-rxterm -geometry 12x1+450+40
+<GUI+r>xterm -geometry 12x1+450+40
 echo c
-rxterm -geometry 12x1+375+40
+<GUI+r>xterm -geometry 12x1+375+40
 echo 3
-rxterm -geometry 12x1+525+40
+<GUI+r>xterm -geometry 12x1+525+40
 echo a
-rxterm -geometry 12x1+600+40
+<GUI+r>xterm -geometry 12x1+600+40
 echo }

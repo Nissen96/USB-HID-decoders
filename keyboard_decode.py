@@ -3,7 +3,7 @@ import argparse
 import sys
 
 
-KEY_CODES = {
+SCAN_CODES = {
     0x04: ('a', 'A'),
     0x05: ('b', 'B'),
     0x06: ('c', 'C'),
@@ -40,11 +40,11 @@ KEY_CODES = {
     0x25: ('8', '*'),
     0x26: ('9', '('),
     0x27: ('0', ')'),
-    0x28: ('<ENTER>',),
-    0x29: ('<ESC>',),
-    0x2A: ('<BACKSPACE>',),
-    0x2B: ('<TAB>',),
-    0x2C: (' ',),
+    0x28: ('ENTER',),
+    0x29: ('ESC',),
+    0x2A: ('BACKSPACE',),
+    0x2B: ('TAB',),
+    0x2C: (' ', ' '),
     0x2D: ('-', '_'),
     0x2E: ('=', '+'),
     0x2F: ('[', '{'),
@@ -57,25 +57,27 @@ KEY_CODES = {
     0x36: (',', '<'),
     0x37: ('.', '>'),
     0x38: ('/', '?'),
-    0x39: ('<CAPS LOCK>',),
-    0x4A: ('<HOME>',),
-    0x4C: ('<DELETE>',),
-    0x4D: ('<END>',),
-    0x4F: ('<RIGHT>',),
-    0x50: ('<LEFT>',),
-    0x51: ('<DOWN>',),
-    0x52: ('<UP>',),
-}
+    0x39: ('CAPS LOCK',),
+    0x4A: ('HOME',),
+    0x4B: ('PAGE UP',),
+    0x4C: ('DELETE',),
+    0x4D: ('END',),
+    0x4E: ('PAGE DOWN',),
+    0x4F: ('RIGHT',),
+    0x50: ('LEFT',),
+    0x51: ('DOWN',),
+    0x52: ('UP',),
+} | {0x3A + i: f'<F{i + 1}>' for i in range(12)}
 
 MODIFIER_CODES = {
-    0x01: '<L_CTRL>',
-    0x02: '<L_SHIFT>',
-    0x04: '<L_ALT>',
-    0x08: '<L_META',
-    0x10: '<R_CTRL>',
-    0x20: '<R_SHIFT>',
-    0x40: '<R_ALT>',
-    0x80: '<R_META>'
+    0x01: ('L_CTRL', 'Ctrl'),
+    0x02: ('L_SHIFT', 'Shift'),
+    0x04: ('L_ALT', 'Alt'),
+    0x08: ('L_GUI', 'GUI'),
+    0x10: ('R_CTRL', 'Ctrl'),
+    0x20: ('R_SHIFT', 'Shift'),
+    0x40: ('R_ALT', 'AltGr'),
+    0x80: ('R_GUI', 'GUI')
 }
 
 
@@ -86,15 +88,28 @@ def simulate_keypresses(keypresses):
     line = 0
 
     for modifiers, key in keypresses:
-        # Shift pressed? Right ALT is used on many European keyboard layouts for some of the same symbols SHIFT is on US layout (e.g. @, $)
-        shift = any(m in modifiers for m in ('<L_SHIFT>', '<R_SHIFT>', '<R_ALT>'))
+        # Write out shortcut keypresses explicitly for now - simulate things like selection, copy, cut, paste etc. later
+        key_combo = {m[1] for m in modifiers}
+        if len(key_combo - {'Shift', 'AltGr'}) > 0:
+            ordered_combo = list(sorted(key_combo, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'GUI'].index(m)))
+            output[line].insert(pos, f'<{"+".join(ordered_combo + [key[0]])}>')
+            pos += 1
+            continue
+        elif key_combo == {'Shift'} and key[0] in ('RIGHT', 'LEFT', 'DOWN', 'UP'):
+            output[line].insert(pos, f'<Shift+{key[0]}>')
+            pos += 1
+            continue
+
+
+        # Shift pressed? AltGr is used on many European keyboard layouts for some of the same symbols SHIFT is on US layout (e.g. @, $)
+        shift = len(key_combo & {'Shift', 'AltGr'}) > 0
 
         match key[0]:
-            case '<ENTER>':
+            case 'ENTER':
                 line += 1
                 pos = 0
                 output.insert(line, [])
-            case '<BACKSPACE>':
+            case 'BACKSPACE':
                 if pos > 0:
                     pos -= 1
                     output[line].pop(pos)
@@ -103,43 +118,43 @@ def simulate_keypresses(keypresses):
                     output.pop(line)
                     line -= 1
                     pos = len(output[line])
-            case '<TAB>':
+            case 'TAB':
                 output[line].insert(pos, '\t')
                 pos += 1
-            case '<CAPS LOCK>':
+            case 'CAPS LOCK':
                 capslock = not capslock
-            case '<HOME>':
+            case 'HOME':
                 pos = 0
-            case '<DELETE>':
+            case 'DELETE':
                 if pos < len(output[line]):
                     output[line].pop(pos)
                 elif line < len(output) - 1:
                     output[line].extend(output[line + 1])
                     output.pop(line)
-            case '<END>':
+            case 'END':
                 pos = len(output[line])
-            case '<RIGHT>':
+            case 'RIGHT':
                 if pos < len(output[line]):
                     pos += 1
                 elif line < len(output) - 1:
                     line += 1
                     pos = 0
-            case '<LEFT>':
+            case 'LEFT':
                 if pos > 0:
                     pos -= 1
                 elif line > 0:
                     line -= 1
                     pos = len(output[line])
-            case '<DOWN>':
+            case 'DOWN':
                 line = min(line + 1, len(output) - 1)
                 pos = min(pos, len(output[line]))
-            case '<UP>':
+            case 'UP':
                 line = max(line - 1, 0)
                 pos = min(pos, len(output[line]))
             case _:
                 if key[0].isalpha():
                     shift ^= capslock
-                output[line].insert(pos, key[-shift])
+                output[line].insert(pos, key[-shift] if len(key) == 2 else f'<{key[0]}>')
                 pos += 1
 
     return '\n'.join([''.join(line) for line in output])
@@ -151,45 +166,40 @@ def format_keypresses(keypresses):
     for modifiers, key in keypresses:
         # Add pressed modifier keys
         for modifier in modifiers - current_modifiers:
-            keys.append(f"{modifier} PRESSED")
+            keys.append(f'<{modifier[0]}> PRESSED')
 
         # Add released modifier keys
         for modifier in current_modifiers - modifiers:
-            keys.append(f"{modifier} RELEASED")
+            keys.append(f'<{modifier[0]}> RELEASED')
 
         current_modifiers = modifiers
 
-        keys.append(key[0])
+        # Add <> around special keys
+        keys.append(key[0] if len(key) == 2 else f'<{key[0]}>')
 
-    return "\n".join(keys)
+    return '\n'.join(keys)
 
 
 def decode_keypresses(raw_data, simulate=False):
     keyboard_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
 
     keypresses = []
-    skip_next = False
+    pressed_keys = set()
+
     for line in keyboard_data:
-        if skip_next:
-            skip_next = False
-            continue
-
         modifier = int(line[:2], 16)
-        keycode = int(line[4:6], 16)
+        scan_codes = set(bytes.fromhex(line[4:])) - {0}
+        new_keys = scan_codes - pressed_keys
+        pressed_keys = scan_codes
 
-        if keycode == 0 or int(line[6:8], 16) != 0:
-            continue
+        for scan_code in sorted(new_keys, reverse=True):
+            if scan_code not in SCAN_CODES:
+                print(f'Unrecognized scan code: {hex(scan_code)}, please lookup USB HID keyboard scan codes!')
+                continue
 
-        if keycode not in KEY_CODES:
-            print(f'Unrecognized keycode: {hex(keycode)}, please lookup USB HID keyboard scan codes!')
-            continue
+            modifiers = {m for code, m in MODIFIER_CODES.items() if modifier & code == code}
 
-        if modifier != 0:
-            skip_next = True
-
-        modifiers = {m for code, m in MODIFIER_CODES.items() if modifier & code == code}
-
-        keypresses.append((modifiers, KEY_CODES[keycode]))
+            keypresses.append((modifiers, SCAN_CODES[scan_code]))
 
     return simulate_keypresses(keypresses) if simulate else format_keypresses(keypresses)
 

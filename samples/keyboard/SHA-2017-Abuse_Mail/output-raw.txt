@@ -160,4 +160,5 @@ g
 o
 u
 t
+<PAGE DOWN>
 <ENTER>

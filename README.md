@@ -41,11 +41,11 @@ Converts keyboard scan codes to a human readable format.
 python keyboard_decode.py <usbdata.txt> [options]
 ```
 
-By default, all keypresses are written out explicitly, each on a separate line, including the press and release of modifier keys (`CTRL`, `SHIFT`, `ALT`,  `META`).
+By default, all keypresses are written out explicitly, each on a separate line, including the press and release of modifier keys (`CTRL`, `SHIFT`, `ALT`,  `GUI`).
 
-Use `--simulate` to simulate keypresses. This handles most key codes and `SHIFT` and will likely produce the expected output.
+Use `--simulate` to simulate keypresses. This handles most key codes and `SHIFT` and will likely produce the expected output. Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but instead written explicitly. 
 
-If the capture is from a non-US keyboard layout or uses other modifier keys than `SHIFT`, the simulation may produce partially incorrect results.
+If the capture is from a non-US keyboard layout, the simulation may produce partially incorrect results.
 In that case, stick with the default raw output, set your keyboard layout correctly, and simulate the keypresses manually in a text editor.
 
 Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2

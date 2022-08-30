@@ -35,7 +35,9 @@ class KeyboardTest(unittest.TestCase):
         for ctf in (root / 'samples' / 'keyboard').iterdir():
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-simulated.txt') as g:
-                    self.assertEqual(decode_keypresses(f.read(), simulate=True), g.read())
+                    expected = g.read()
+                    decoded = decode_keypresses(f.read(), simulate=True)
+                    self.assertEqual(expected, decoded, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, decoded=decoded)}')
 
 
 if __name__ == '__main__':

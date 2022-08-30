@@ -6,4 +6,4 @@ unzip secret.zip
 Pyj4m4P4rtY@2017
 cat secret.txt
 display hamburg	
-logout
+logout<PAGE DOWN>
