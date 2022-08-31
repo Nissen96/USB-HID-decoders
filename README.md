@@ -47,14 +47,16 @@ python keyboard_decode.py <usbdata.txt> [options]
 - `simulate`: Simulate the keypresses as if written in a text editor with a US-keyboard.
 - `replay`: Replay keypresses on the actual machine in the current window (unsafe!).
 
-`simulate` mode is default and will likely produce the expected output. It handles most scan codes and `Shift`. Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but written explicitly. 
+`simulate` mode is default and will likely produce the expected output. It handles most scan codes and `Shift`. Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but written explicitly.
+
+A simulation environment can be set with `--env` (`txt` or `cmd`). In text mode (default), a multiline text editor is assumed and e.g. all arrow key presses interpreted as cursor movement. `<ENTER>` will insert a line break at the cursor position. In command mode, a single-line interactive environment (terminal, browser, etc.) is assumed, where keys like `<TAB>`, `<ENTER>`, `<UP>`, and `<DOWN>` are considered action keys. `<ENTER>` starts a new line, and other actions are written out explicitly.
 
 If the capture is from a non-US keyboard layout, the simulation may produce partially incorrect results.
-In that case, use `raw` mode, set your keyboard layout correctly, and simulate the keypresses manually in a text editor.
+In that case, use `raw` mode, set your keyboard layout correctly, move to the right environment, and simulate the keypresses manually in a text editor.
 
 Optionally, use `replay` mode to simulate the keypresses automatically. *Never* use this mode on untrusted input, it will type whatever was typed during the capture, including any commands, shortcuts, etc. so make sure to first inspect the output from the raw and simulated modes. Press `q` at any time during replay to stop.
 
-Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout) but in `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10. This is a known bug in the underlying keybord library. As a workaround, the program will stop and wait for you to perform those keypresses manually.
+Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout and are in the right environment) but in `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10. This is a known bug in the underlying keybord library. As a workaround, the program will stop and wait for you to perform those keypresses manually.
 
 Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
 

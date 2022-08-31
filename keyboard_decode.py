@@ -118,7 +118,7 @@ def replay_keypresses(keypresses, delay=20):
             time.sleep(delay / 1000)
 
 
-def simulate_keypresses(keypresses):
+def simulate_keypresses(keypresses, text_mode=True):
     output = [[]]
     capslock = False
     pos = 0
@@ -128,7 +128,7 @@ def simulate_keypresses(keypresses):
         # Write out shortcut keypresses explicitly for now - simulate things like selection, copy, cut, paste etc. later
         key_combo = {m[1] for m in modifiers}
         if len(key_combo - {'Shift', 'AltGr'}) > 0:
-            ordered_combo = list(sorted(key_combo, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'GUI'].index(m)))
+            ordered_combo = list(sorted(key_combo, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'WIN'].index(m)))
             output[line].insert(pos, f'<{"+".join(ordered_combo + [key[0]])}>')
             pos += 1
             continue
@@ -136,7 +136,6 @@ def simulate_keypresses(keypresses):
             output[line].insert(pos, f'<Shift+{key[0]}>')
             pos += 1
             continue
-
 
         # Shift pressed? AltGr is used on many European keyboard layouts for some of the same symbols SHIFT is on US layout (e.g. @, $)
         shift = len(key_combo & {'Shift', 'AltGr'}) > 0
@@ -148,10 +147,11 @@ def simulate_keypresses(keypresses):
             case 'ENTER':
                 output.insert(line + 1, [])
 
-                # If mid-line, move remainder of line down to start of new line
-                output[line + 1].extend(output[line][pos:])
-                del output[line][pos:]
-                
+                # In text mode, move remainder of line down to start of new line
+                if text_mode:
+                    output[line + 1].extend(output[line][pos:])
+                    del output[line][pos:]
+
                 line += 1
                 pos = 0
             case 'BACKSPACE':
@@ -164,7 +164,7 @@ def simulate_keypresses(keypresses):
                     line -= 1
                     pos = len(output[line])
             case 'TAB':
-                output[line].insert(pos, '\t')
+                output[line].insert(pos, '\t' if text_mode else '<TAB>')
                 pos += 1
             case 'CAPS LOCK':
                 capslock = not capslock
@@ -191,11 +191,19 @@ def simulate_keypresses(keypresses):
                     line -= 1
                     pos = len(output[line])
             case 'DOWN':
-                line = min(line + 1, len(output) - 1)
-                pos = min(pos, len(output[line]))
+                if text_mode:
+                    line = min(line + 1, len(output) - 1)
+                    pos = min(pos, len(output[line]))
+                else:
+                    output[line].insert(pos, '<DOWN>')
+                    pos += 1
             case 'UP':
-                line = max(line - 1, 0)
-                pos = min(pos, len(output[line]))
+                if text_mode:
+                    line = max(line - 1, 0)
+                    pos = min(pos, len(output[line]))
+                else:
+                    output[line].insert(pos, '<UP>')
+                    pos += 1
             case _:
                 if key[0].isalpha():
                     shift ^= capslock
@@ -245,7 +253,7 @@ def decode_keypresses(raw_data):
             modifiers = {m for code, m in MODIFIER_CODES.items() if modifier & code == code}
 
             keypresses.append((modifiers, SCAN_CODES[scan_code]))
-    
+
     return keypresses
 
 
@@ -278,18 +286,22 @@ Limitations:
     simulate: output a simulation of the keystrokes (safe)
     replay: play back each keystroke directly on your machine (unsafe)''')
     parser.add_argument('-d', '--delay', type=int, default=50, help='delay in milliseconds between keystrokes for replay mode (default: %(default)s)')
+    parser.add_argument('-e', '--env', choices=('txt', 'cmd'), default='txt', help='''assumed environment for simulation mode (default: %(default)s)
+    txt: multi-line text editor environment. Arrow keys move the cursor and <ENTER> inserts a line break.
+    cmd: assume single-line interactive environment, i.e. terminal, browser, etc.
+         <UP>, <DOWN>, and <TAB> are output explicitly and <ENTER> starts a new line.''')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
     keypresses = decode_keypresses(args.file.read())
-    
+
     if args.mode == 'raw':
         output = format_raw_keypresses(keypresses)
         args.output.write(output) if args.output else print(output)
     elif args.mode == 'simulate':
-        output = simulate_keypresses(keypresses)
+        output = simulate_keypresses(keypresses, text_mode=args.env == 'txt')
         args.output.write(output) if args.output else print(output)
     elif args.mode == 'replay':
         return replay_keypresses(keypresses, args.delay)

@@ -1,0 +1,8 @@
+redeagle@astzk.gov.hkn<TAB>Mission Successful!<TAB>General Red Eagle!
+We have successfully deployed NotYepta and taken down major parts of Kolechia's infrastructure.
+They will be an easy target now and we are almost ready for the physical attack.
+In case the worm spreads to our internal networks through any communications channel from Kolechia, our data can be recovered with the decryption key DDC{f1l3_3ncryp710n_b3_G0NE}
+
+We are ready to attack on your command!
+
+GLORY TO ARSTOTZKA!
