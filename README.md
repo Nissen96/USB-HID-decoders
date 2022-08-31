@@ -54,7 +54,7 @@ In that case, use `raw` mode, set your keyboard layout correctly, and simulate t
 
 Optionally, use `replay` mode to simulate the keypresses automatically. *Never* use this mode on untrusted input, it will type whatever was typed during the capture, including any commands, shortcuts, etc. so make sure to first inspect the output from the raw and simulated modes. Press `q` at any time during replay to stop.
 
-Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout) but in `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10. This is a known bug in the underlying keybord library (both `keyboard` and `pyautogui`). As a workaround, the program will stop and wait for you to perform those keypresses manually.
+Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout) but in `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10. This is a known bug in the underlying keybord library. As a workaround, the program will stop and wait for you to perform those keypresses manually.
 
 Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
 
