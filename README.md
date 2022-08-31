@@ -43,7 +43,7 @@ python keyboard_decode.py <usbdata.txt> [options]
 
 **Modes**
 
-- `raw`: Output each keypress explicitly on a separate line, including the press and release of modifier keys (`CTRL`, `SHIFT`, `ALT`,  `WIN`).
+- `raw`: Output each keypress (with modifiers) explicitly on a separate line.
 - `simulate`: Simulate the keypresses as if written in a text editor with a US-keyboard.
 - `replay`: Replay keypresses on the actual machine in the current window (unsafe!).
 

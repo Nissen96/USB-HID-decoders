@@ -15,9 +15,7 @@ a
 t
 c
 h
-<RIGHT SHIFT> PRESSED
-/
-<RIGHT SHIFT> RELEASED
+<Shift+/>
 v
 =
 o

@@ -19,9 +19,7 @@ f
 l
 a
 g
-<LEFT SHIFT> PRESSED
-[
-<LEFT SHIFT> RELEASED
+<Shift+[>
 f
 7
 7
@@ -54,9 +52,7 @@ a
 6
 3
 4
-<LEFT SHIFT> PRESSED
-]
-<LEFT SHIFT> RELEASED
+<Shift+]>
 <SPACE>
 h
 a
@@ -70,5 +66,4 @@ l
 o
 l
 <ENTER>
-<LEFT CTRL> PRESSED
-c
+<Ctrl+c>

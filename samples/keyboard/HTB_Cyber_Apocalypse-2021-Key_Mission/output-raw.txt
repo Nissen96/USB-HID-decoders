@@ -1,6 +1,4 @@
-<LEFT SHIFT> PRESSED
-i
-<LEFT SHIFT> RELEASED
+<Shift+i>
 <SPACE>
 a
 m
@@ -133,9 +131,7 @@ u
 s
 .
 <SPACE>
-<LEFT SHIFT> PRESSED
-t
-<LEFT SHIFT> RELEASED
+<Shift+t>
 h
 i
 s
@@ -209,9 +205,7 @@ s
 e
 .
 <SPACE>
-<LEFT SHIFT> PRESSED
-t
-<LEFT SHIFT> RELEASED
+<Shift+t>
 h
 e
 <SPACE>
@@ -246,55 +240,37 @@ n
 i
 s
 <SPACE>
-<LEFT SHIFT> PRESSED
-c
-h
-t
-b
-[
-<LEFT SHIFT> RELEASED
+<Shift+c>
+<Shift+h>
+<Shift+t>
+<Shift+b>
+<Shift+[>
 a
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 p
 l
 a
 c
 3
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 f
-<LEFT SHIFT> PRESSED
-a
-<LEFT SHIFT> RELEASED
+<Shift+a>
 r
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 f
-<LEFT SHIFT> PRESSED
-a
-<LEFT SHIFT> RELEASED
+<Shift+a>
 r
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 a
 w
 a
 y
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 f
 r
 0
 m
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 e
 a
 e
@@ -302,5 +278,4 @@ e
 r
 t
 h
-<LEFT SHIFT> PRESSED
-]
+<Shift+]>

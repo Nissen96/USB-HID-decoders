@@ -70,16 +70,15 @@ SCAN_CODES = {
     0x52: ('UP',),
 } | {0x3A + i: f'F{i + 1}' for i in range(12)}
 
-# Map code to id and, printed name
 MODIFIER_CODES = {
-    0x01: ('LEFT CTRL', 'Ctrl'),
-    0x02: ('LEFT SHIFT', 'Shift'),
-    0x04: ('LEFT ALT', 'Alt'),
-    0x08: ('LEFT WIN', 'WIN'),
-    0x10: ('RIGHT CTRL', 'Ctrl'),
-    0x20: ('RIGHT SHIFT', 'Shift'),
-    0x40: ('RIGHT ALT', 'AltGr'),
-    0x80: ('RIGHT WIN', 'WIN')
+    0x01: 'Ctrl',
+    0x02: 'Shift',
+    0x04: 'Alt',
+    0x08: 'WIN',
+    0x10: 'Ctrl',
+    0x20: 'Shift',
+    0x40: 'AltGr',
+    0x80: 'WIN'
 }
 
 
@@ -98,22 +97,21 @@ def replay_keypresses(keypresses, delay=20):
     time.sleep(0.1)
 
     for modifiers, keypress in keypresses:
-        modifier_names = {m[0] for m in modifiers}
-        shift = len(modifier_names) > 0 and len(modifier_names - {'LEFT SHIFT', 'RIGHT SHIFT'}) == 0
+        shift = modifiers == {'Shift'}
         key = k if (k := keypress[0]).isalnum() else keypress[-shift]  # Shouldn't be necessary to manually select shifted/not, but keyboard library has bugs
 
-        # Assume RIGHT ALT should be AltGr and replace with Ctrl+Alt
-        if 'RIGHT ALT' in modifier_names:
-            modifier_names = modifier_names - {'RIGHT ALT'} | {'CTRL', 'ALT'}
+        # Replace AltGr with Ctrl+Alt
+        if 'AltGr' in modifiers:
+            modifiers = modifiers - {'AltGr'} | {'Ctrl', 'Alt'}
 
         # Workaround for <Shift+Arrow Keys> not working correctly in Win10 - let users do this manually
         if shift and key in {'RIGHT', 'LEFT', 'DOWN', 'UP'}:
             print(f'Please press <Shift+{key}> manually...')
-            hotkey = keyboard.get_hotkey_name([*modifier_names, key])
+            hotkey = keyboard.get_hotkey_name([*modifiers, key])
             keyboard.wait(f'shift+{key.lower()} arrow')
             time.sleep(1)
         else:
-            hotkey = keyboard.get_hotkey_name([*modifier_names, key])
+            hotkey = keyboard.get_hotkey_name([*modifiers, key])
             keyboard.send(hotkey)
             time.sleep(delay / 1000)
 
@@ -125,20 +123,19 @@ def simulate_keypresses(keypresses, text_mode=True):
     line = 0
 
     for modifiers, key in keypresses:
-        # Write out shortcut keypresses explicitly for now - simulate things like selection, copy, cut, paste etc. later
-        key_combo = {m[1] for m in modifiers}
-        if len(key_combo - {'Shift', 'AltGr'}) > 0:
-            ordered_combo = list(sorted(key_combo, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'WIN'].index(m)))
-            output[line].insert(pos, f'<{"+".join(ordered_combo + [key[0]])}>')
+        # Write out shortcut keypresses explicitly
+        if len(modifiers - {'Shift', 'AltGr'}) > 0:
+            ordered_modifiers = list(sorted(modifiers, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'WIN'].index(m)))
+            output[line].insert(pos, f'<{"+".join(ordered_modifiers + [key[0]])}>')
             pos += 1
             continue
-        elif key_combo == {'Shift'} and key[0] in ('RIGHT', 'LEFT', 'DOWN', 'UP'):
+        elif modifiers == {'Shift'} and key[0] in ('RIGHT', 'LEFT', 'DOWN', 'UP'):
             output[line].insert(pos, f'<Shift+{key[0]}>')
             pos += 1
             continue
 
         # Shift pressed? AltGr is used on many European keyboard layouts for some of the same symbols SHIFT is on US layout (e.g. @, $)
-        shift = len(key_combo & {'Shift', 'AltGr'}) > 0
+        shift = len(modifiers & {'Shift', 'AltGr'}) > 0
 
         match key[0]:
             case 'SPACE':
@@ -215,20 +212,13 @@ def simulate_keypresses(keypresses, text_mode=True):
 
 def format_raw_keypresses(keypresses):
     keys = []
-    current_modifiers = set()
     for modifiers, key in keypresses:
-        # Add pressed modifier keys
-        for modifier in modifiers - current_modifiers:
-            keys.append(f'<{modifier[0]}> PRESSED')
+        ordered_modifiers = list(sorted(modifiers, key=lambda m: ['Ctrl', 'Shift', 'Alt', 'AltGr', 'WIN'].index(m)))
+        key_combo = '+'.join(ordered_modifiers + [key[0]])
+        if len(modifiers) > 0 or len(key) == 1:
+            key_combo = f'<{key_combo}>'
 
-        # Add released modifier keys
-        for modifier in current_modifiers - modifiers:
-            keys.append(f'<{modifier[0]}> RELEASED')
-
-        current_modifiers = modifiers
-
-        # Add <> around special keys
-        keys.append(key[0] if len(key) == 2 else f'<{key[0]}>')
+        keys.append(key_combo)
 
     return '\n'.join(keys)
 

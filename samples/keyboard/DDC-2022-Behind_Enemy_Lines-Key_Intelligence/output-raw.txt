@@ -6,9 +6,7 @@ a
 g
 l
 e
-<LEFT SHIFT> PRESSED
-2
-<LEFT SHIFT> RELEASED
+<Shift+2>
 a
 s
 z
@@ -27,9 +25,7 @@ h
 k
 n
 <TAB>
-<LEFT SHIFT> PRESSED
-m
-<LEFT SHIFT> RELEASED
+<Shift+m>
 i
 s
 s
@@ -37,9 +33,7 @@ i
 o
 n
 <SPACE>
-<LEFT SHIFT> PRESSED
-s
-<LEFT SHIFT> RELEASED
+<Shift+s>
 u
 c
 c
@@ -49,13 +43,9 @@ s
 f
 u
 l
-<LEFT SHIFT> PRESSED
-1
-<LEFT SHIFT> RELEASED
+<Shift+1>
 <TAB>
-<LEFT SHIFT> PRESSED
-g
-<LEFT SHIFT> RELEASED
+<Shift+g>
 e
 n
 e
@@ -63,26 +53,18 @@ r
 a
 l
 <SPACE>
-<LEFT SHIFT> PRESSED
-r
-<LEFT SHIFT> RELEASED
+<Shift+r>
 e
 d
 <SPACE>
-<LEFT SHIFT> PRESSED
-e
-<LEFT SHIFT> RELEASED
+<Shift+e>
 a
 g
 l
 e
-<LEFT SHIFT> PRESSED
-1
-<LEFT SHIFT> RELEASED
+<Shift+1>
 <ENTER>
-<LEFT SHIFT> PRESSED
-w
-<LEFT SHIFT> RELEASED
+<Shift+w>
 e
 <SPACE>
 h
@@ -112,14 +94,10 @@ y
 e
 d
 <SPACE>
-<LEFT SHIFT> PRESSED
-n
-<LEFT SHIFT> RELEASED
+<Shift+n>
 o
 t
-<LEFT SHIFT> PRESSED
-y
-<LEFT SHIFT> RELEASED
+<Shift+y>
 e
 p
 t
@@ -155,9 +133,7 @@ s
 o
 f
 <SPACE>
-<LEFT SHIFT> PRESSED
-k
-<LEFT SHIFT> RELEASED
+<Shift+k>
 o
 l
 e
@@ -184,9 +160,7 @@ r
 e
 .
 <ENTER>
-<LEFT SHIFT> PRESSED
-t
-<LEFT SHIFT> RELEASED
+<Shift+t>
 h
 e
 y
@@ -267,9 +241,7 @@ c
 k
 .
 <ENTER>
-<LEFT SHIFT> PRESSED
-i
-<LEFT SHIFT> RELEASED
+<Shift+i>
 n
 <SPACE>
 c
@@ -363,9 +335,7 @@ r
 o
 m
 <SPACE>
-<LEFT SHIFT> PRESSED
-k
-<LEFT SHIFT> RELEASED
+<Shift+k>
 o
 l
 e
@@ -430,16 +400,12 @@ d
 d
 c
 <CAPS LOCK>
-<LEFT SHIFT> PRESSED
-[
-<LEFT SHIFT> RELEASED
+<Shift+[>
 f
 1
 l
 3
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 3
 n
 c
@@ -456,28 +422,20 @@ o
 1
 0
 n
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 b
 3
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 <CAPS LOCK>
 g
 0
 n
 e
 <CAPS LOCK>
-<LEFT SHIFT> PRESSED
-]
-<LEFT SHIFT> RELEASED
+<Shift+]>
 <ENTER>
 <ENTER>
-<LEFT SHIFT> PRESSED
-w
-<LEFT SHIFT> RELEASED
+<Shift+w>
 e
 <SPACE>
 a
@@ -515,9 +473,7 @@ m
 a
 n
 d
-<LEFT SHIFT> PRESSED
-1
-<LEFT SHIFT> RELEASED
+<Shift+1>
 <ENTER>
 <ENTER>
 <CAPS LOCK>
@@ -539,7 +495,5 @@ t
 z
 k
 a
-<LEFT SHIFT> PRESSED
-1
-<LEFT SHIFT> RELEASED
+<Shift+1>
 <CAPS LOCK>

@@ -10,18 +10,14 @@ e
 x
 e
 <ENTER>
-<LEFT SHIFT> PRESSED
-o
-<LEFT SHIFT> RELEASED
+<Shift+o>
 h
 <SPACE>
 h
 i
 .
 <SPACE>
-<LEFT SHIFT> PRESSED
-y
-<LEFT SHIFT> RELEASED
+<Shift+y>
 o
 u
 <SPACE>
@@ -41,9 +37,7 @@ u
 t
 .
 <SPACE>
-<RIGHT SHIFT> PRESSED
-g
-<RIGHT SHIFT> RELEASED
+<Shift+g>
 o
 o
 d
@@ -53,9 +47,7 @@ o
 b
 .
 <SPACE>
-<LEFT SHIFT> PRESSED
-i
-<LEFT SHIFT> RELEASED
+<Shift+i>
 '
 m
 <SPACE>
@@ -165,15 +157,11 @@ l
 y
 .
 <SPACE>
-<LEFT SHIFT> PRESSED
-o
-<LEFT SHIFT> RELEASED
+<Shift+o>
 k
 .
 <SPACE>
-<RIGHT SHIFT> PRESSED
-t
-<RIGHT SHIFT> RELEASED
+<Shift+t>
 h
 a
 t
@@ -192,36 +180,24 @@ f
 l
 a
 g
-<LEFT SHIFT> PRESSED
-[
-<LEFT SHIFT> RELEASED
+<Shift+[>
 u
 s
 b
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 p
 c
 a
 p
 s
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 a
 r
 e
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 f
 u
 n
-<LEFT SHIFT> PRESSED
-]
-<LEFT CTRL> PRESSED
-<LEFT SHIFT> RELEASED
-c
-<LEFT CTRL> RELEASED
+<Shift+]>
+<Ctrl+c>
 q

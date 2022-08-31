@@ -16,31 +16,24 @@ l
 a
 g
 <SPACE>
-<RIGHT SHIFT> PRESSED
-s
-a
-f
-c
-s
-p
-[
-<RIGHT SHIFT> RELEASED
+<Shift+s>
+<Shift+a>
+<Shift+f>
+<Shift+c>
+<Shift+s>
+<Shift+p>
+<Shift+[>
 e
 a
 t
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 t
 h
 a
 t
-<LEFT SHIFT> PRESSED
--
-<LEFT SHIFT> RELEASED
+<Shift+->
 f
 r
 o
 g
-<RIGHT SHIFT> PRESSED
-]
+<Shift+]>

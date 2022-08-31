@@ -3,31 +3,19 @@ v
 g
 j
 4
-<LEFT SHIFT> PRESSED
-s
-s
-<RIGHT SHIFT> PRESSED
-<LEFT SHIFT> RELEASED
-l
-<RIGHT SHIFT> RELEASED
+<Shift+s>
+<Shift+s>
+<Shift+l>
 9
-<RIGHT SHIFT> PRESSED
-n
-h
-v
-<RIGHT SHIFT> RELEASED
+<Shift+n>
+<Shift+h>
+<Shift+v>
 u
-<LEFT SHIFT> PRESSED
-k
-<LEFT SHIFT> RELEASED
+<Shift+k>
 0
-<LEFT SHIFT> PRESSED
-d
-<LEFT SHIFT> RELEASED
+<Shift+d>
 6
 d
 3
-<LEFT SHIFT> PRESSED
-f
-<LEFT SHIFT> RELEASED
+<Shift+f>
 <ENTER>

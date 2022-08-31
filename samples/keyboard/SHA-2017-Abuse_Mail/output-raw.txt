@@ -3,9 +3,7 @@ o
 o
 t
 <ENTER>
-<LEFT SHIFT> PRESSED
-w
-<LEFT SHIFT> RELEASED
+<Shift+w>
 e
 l
 c
@@ -37,19 +35,15 @@ t
 t
 p
 s
-<LEFT SHIFT> PRESSED
-;
-<LEFT SHIFT> RELEASED
+<Shift+;>
 /
 /
 r
 o
 o
 t
-<LEFT SHIFT> PRESSED
-;
-w
-<LEFT SHIFT> RELEASED
+<Shift+;>
+<Shift+w>
 e
 l
 c
@@ -59,9 +53,7 @@ e
 1
 2
 3
-<LEFT SHIFT> PRESSED
-2
-<LEFT SHIFT> RELEASED
+<Shift+2>
 i
 n
 t
@@ -99,24 +91,18 @@ z
 i
 p
 <ENTER>
-<LEFT SHIFT> PRESSED
-p
-<LEFT SHIFT> RELEASED
+<Shift+p>
 y
 j
 4
 m
 4
-<LEFT SHIFT> PRESSED
-p
-<LEFT SHIFT> RELEASED
+<Shift+p>
 4
 r
 t
-<LEFT SHIFT> PRESSED
-y
-2
-<LEFT SHIFT> RELEASED
+<Shift+y>
+<Shift+2>
 2
 0
 1

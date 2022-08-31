@@ -12,9 +12,7 @@ x
 t
 <ENTER>
 i
-<RIGHT SHIFT> PRESSED
-t
-<RIGHT SHIFT> RELEASED
+<Shift+t>
 h
 e
 <SPACE>
@@ -32,16 +30,12 @@ f
 <ESC>
 v
 b
-<RIGHT SHIFT> PRESSED
-u
-a
-[
-<RIGHT SHIFT> RELEASED
+<Shift+u>
+<Shift+a>
+<Shift+[>
 m
 y
-<RIGHT SHIFT> PRESSED
--
-<RIGHT SHIFT> RELEASED
+<Shift+->
 f
 a
 v
@@ -50,29 +44,21 @@ r
 i
 t
 e
-<RIGHT SHIFT> PRESSED
--
-<RIGHT SHIFT> RELEASED
+<Shift+->
 e
 d
 i
 t
 o
 r
-<RIGHT SHIFT> PRESSED
--
-<RIGHT SHIFT> RELEASED
+<Shift+->
 i
 s
-<RIGHT SHIFT> PRESSED
--
-<RIGHT SHIFT> RELEASED
+<Shift+->
 v
 i
 m
-<RIGHT SHIFT> PRESSED
-]
-<RIGHT SHIFT> RELEASED
+<Shift+]>
 <ESC>
 h
 h
@@ -98,16 +84,11 @@ u
 <ESC>
 v
 i
-<RIGHT SHIFT> PRESSED
-[
-u
-<RIGHT SHIFT> RELEASED
+<Shift+[>
+<Shift+u>
 <ESC>
-<RIGHT SHIFT> PRESSED
-;
-<RIGHT SHIFT> RELEASED
+<Shift+;>
 w
 q
 <ENTER>
-<LEFT ALT> PRESSED
-<TAB>
+<Alt+TAB>
