@@ -120,3 +120,8 @@ sort -s -k1,1 |  # Sort on first field only (usb.src)
 awk '{ printf "%s", (NR==1 ? $1 : pre!=$1 ? "\n" $1 : "") " " $2; pre=$1 }' |  # Group data by usb.src
 awk '{ for (i=2; i<=NF; i++) print $i > "usbdata-" $1 ".txt" }'  # For each group, store data in usbdata-<usb.src>.txt
 ```
+
+Extract HID data from Bluetooth Attribute Protocol (`btatt`):
+```bash
+tshark -r <pcap-file> -Y "btatt.value && frame.len == 20" -T fields -e "btatt.value" > usbdata.txt
+```
