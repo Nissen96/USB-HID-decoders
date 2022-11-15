@@ -4,7 +4,7 @@ This repository contains decoders and visualizers for various USB Human Interfac
 
 HID specification: https://www.usb.org/sites/default/files/hid1_11.pdf
 
-Currently supports keyboard and mouse data.
+Currently supports keyboard, mouse, and tablet data.
 
 
 ## Installation
