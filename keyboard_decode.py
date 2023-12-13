@@ -223,15 +223,20 @@ def format_raw_keypresses(keypresses):
     return '\n'.join(keys)
 
 
-def decode_keypresses(raw_data):
-    keyboard_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
+def decode_keypresses(raw_data, offset=0, reserved=True):
+    keyboard_data = [
+        bytes.fromhex(''.join(d.strip().split(':')))[offset:]
+        for d in raw_data.split('\n') if d
+    ]
 
     keypresses = []
     pressed_keys = set()
 
     for line in keyboard_data:
-        modifier = int(line[:2], 16)
-        scan_codes = set(bytes.fromhex(line[4:])) - {0}
+        modifier = line[0]
+        key_offset = 2 if reserved else 1
+        scan_codes = set(line[key_offset:]) - {0}
+
         new_keys = scan_codes - pressed_keys
         pressed_keys = scan_codes
 
@@ -271,6 +276,8 @@ Limitations:
     )
     parser.add_argument('file', type=argparse.FileType('r'), help='keyboard data file')
     parser.add_argument('-o', '--output', type=argparse.FileType('w'), help='output file', default=sys.stdout)
+    parser.add_argument('--offset', type=int, default=0, help='byte offset of data (default: %(default)s)')
+    parser.add_argument('--no-reserved', action='store_true', help='set if data has no reserved byte (e.g. from USBPcap)')
     parser.add_argument('-m', '--mode', choices=('raw', 'simulate', 'replay'), default='simulate', help='''keystroke output mode (default: %(default)s)
     raw: output each keystroke on a separate line
     simulate: output a simulation of the keystrokes (safe)
@@ -285,7 +292,7 @@ Limitations:
 
 def main():
     args = parse_args()
-    keypresses = decode_keypresses(args.file.read())
+    keypresses = decode_keypresses(args.file.read(), offset=args.offset, reserved=not args.no_reserved)
 
     if args.mode == 'raw':
         output = format_raw_keypresses(keypresses)
