@@ -240,40 +240,6 @@ def extract_hid_data(packets: [USB_URB], devices: dict) -> dict:
     return {addr: info for addr, info in devices.items() if len(info['data']) > 0}
 
 
-def preprocess_hid_data(data: [str]) -> [str]:
-    """
-    Pre-process HID data to make it easier to decode
-
-    The device is fully documented in an HID Report Descriptor sent upon connection,
-    but this is seldom available in PCAP files - therefore heuristic checks are required.
-
-    Outliers are not detected and will likely make pre-processing useless.
-    Remove these by manual inspection on the output and re-run pre-processing.
-    """
-    line_lengths = Counter([len(d) for d in data])
-    likely_length = line_lengths.most_common(1)[0][0]
-
-    # Prune extra lines (empty, too short, too long)
-    data = [d for d in data if len(d) == likely_length]
-
-    # Prune non-changing bytes - likely prefix/suffix/reserved
-    bytes_found = [{d[i] for d in data} for i in range(likely_length)]
-    skip = {i for i, found in enumerate(bytes_found) if len(found) == 1}
-
-    pruned = []
-    for d in data:
-        data_left = [d[i] for i in range(likely_length) if i not in skip]
-        if len(data_left) == 0:
-            continue
-
-        if len(data_left) == 1:
-            data_left.insert(0, 0)
-
-        pruned.append(bytes(data_left))
-
-    return pruned
-
-
 def extract_data(filename: str) -> dict:
     try:
         pcap = rdpcap(filename)
@@ -309,7 +275,7 @@ def extract_data(filename: str) -> dict:
     return extract_hid_data(usb_packets, devices)
 
 
-def write_results(hid_data: dict, output_folder: str, preprocess: bool = True):
+def write_results(hid_data: dict, output_folder: str):
     out = Path(output_folder)
     if not out.exists():
         out.mkdir()
@@ -318,11 +284,6 @@ def write_results(hid_data: dict, output_folder: str, preprocess: bool = True):
         exit()
 
     for addr, info in hid_data.items():
-        if preprocess:
-            info['data'] = preprocess_hid_data(info['data'])
-            if len(info['data']) == 0:
-                continue
-
         print(f'Found HID data for {info["device"]} device at {addr}, writing to {output_folder}...')
         with open(f'{output_folder}/{info["device"]}-{addr}.txt', 'w') as f:
             for line in info['data']:
@@ -336,14 +297,13 @@ def parse_args():
     )
     parser.add_argument('file', help='input file (pcap or hex data)')
     parser.add_argument('-o', '--output', default='output', help='output folder (default \'%(default)s\')')
-    parser.add_argument('--skip-preprocess', action='store_true', help='extract raw HID data (decoders likely won\'t work)')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
     hid_data = extract_data(args.file)
-    write_results(hid_data, args.output, preprocess=not args.skip_preprocess)
+    write_results(hid_data, args.output)
 
 
 if __name__ == '__main__':
