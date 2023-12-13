@@ -2,7 +2,6 @@ import argparse
 import struct
 
 from enum import Enum
-from collections import Counter
 from pathlib import Path
 from scapy.all import *
 

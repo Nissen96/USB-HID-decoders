@@ -1,24 +1,37 @@
 #!/usr/bin/env python3
-import keyboard
 import matplotlib.pyplot as plt
 import os
 import signal
 
 
-# Force quit on q and sigint (e.g. Ctrl+C)
-keyboard.on_press_key('q', lambda _: os._exit(0))
-signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
+try:
+    import keyboard
+    listen_keypress = True
+except ModuleNotFoundError:
+    print('Keyboard module not found, keypresses ignored')
+    listen_keypress = False
 
-# Pause on <SPACE>
-PAUSE = False
-def pause(_):
-    global PAUSE
-    PAUSE = True
-keyboard.on_press_key('space', pause)
+# Check for non-root access on Linux
+try:
+    keyboard.unhook_all()
+except ImportError:
+    print('Keyboard module requires root access, keypresses ignored')
+    listen_keypress = False
+
+if listen_keypress:
+    # Force quit on q and sigint (e.g. Ctrl+C)
+    keyboard.on_press_key('q', lambda _: os._exit(0))
+    signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
+
+    # Pause on <SPACE>
+    PAUSE = False
+    def pause(_):
+        global PAUSE
+        PAUSE = True
+    keyboard.on_press_key('space', pause)
 
 
 def draw_movement(clicks, xs, ys, draw_mode=1, draw_clicks=False, speed=0):
-    global PAUSE
     cur_x, cur_y = xs[0], ys[0]
     mousedown = False
 
@@ -26,14 +39,17 @@ def draw_movement(clicks, xs, ys, draw_mode=1, draw_clicks=False, speed=0):
     def clear_screen():
         plt.cla()
         plt.axis((min(xs) - 50, max(xs) + 50, min(ys) - 50, max(ys) + 50))
-    keyboard.on_press_key('c', lambda _: clear_screen())
+    if listen_keypress:
+        keyboard.on_press_key('c', lambda _: clear_screen())
 
     clear_screen()
     for step, (click, x, y) in enumerate(zip(clicks, xs, ys)):
-        # Handle pause, resume on <SPACE>
-        if PAUSE:
-            keyboard.wait('space')
-            PAUSE = False
+        if listen_keypress:
+            # Handle pause, resume on <SPACE>
+            global PAUSE
+            if PAUSE:
+                keyboard.wait('space')
+                PAUSE = False
 
         left, right, middle = click & 0b1, (click & 0b10) >> 1, (click & 0b100) >> 2
         color = (left * 0.8, middle * 0.8, right * 0.8) if click else 'lightgray'

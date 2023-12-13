@@ -11,12 +11,15 @@ def to_signed_int(n, bitlength):
     return n
 
 
-def decode_tablet_data(raw_data):
-    tablet_data = [''.join(d.strip().split(':')) for d in raw_data.split('\n') if d]
+def decode_tablet_data(raw_data, offset=0):
+    tablet_data = [
+        bytes.fromhex(''.join(d.strip().split(':')))[offset:]
+        for d in raw_data.split('\n') if d
+    ]
 
     clicks, xs, ys, pressures = [], [], [], []
     for line in tablet_data:
-        click, x, y, pressure = struct.unpack('<Bhhh', bytes.fromhex(line[2:16]))
+        click, x, y, pressure = struct.unpack('<Bhhh', line)
         clicks.append(click & 0b1)
         pressures.append(pressure)
         xs.append(x)
@@ -32,6 +35,7 @@ def parse_args():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument('file', type=argparse.FileType('r'), help='tablet data file')
+    parser.add_argument('--offset', type=int, default=0, help='byte offset of data (default: %(default)s)')
     parser.add_argument('-m', '--mode', type=int, choices=range(3), default=1, metavar='1-2', help='''display mode for pen movement, from less to more verbose (default: %(default)s)
   1: show pen movements only while clicked
   2: show all pen movements''')
@@ -41,7 +45,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    clicks, xs, ys, _ = decode_tablet_data(args.file.read())
+    clicks, xs, ys, _ = decode_tablet_data(args.file.read(), offset=args.offset)  # ignore pressure for now
     draw_movement(clicks, xs, ys, draw_mode=args.mode, draw_clicks=False, speed=args.speed)
 
 
