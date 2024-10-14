@@ -150,7 +150,7 @@ In Wireshark, the relevant data is stored in the field `usb.capdata` (Leftover C
 Extract with
 
 ```bash
-tshark -r <pcap-file> -Y 'ubshid.data' -T fields -e usbhid.data > usbdata.txt
+tshark -r <pcap-file> -Y 'usbhid.data' -T fields -e usbhid.data > usbdata.txt
 ```
 
 or
