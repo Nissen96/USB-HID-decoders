@@ -4,6 +4,7 @@ Test decoding scripts against expected output
 import unittest
 from pathlib import Path
 from keyboard_decode import decode_keypresses, format_raw_keypresses, simulate_keypresses
+from mouse_decode import to_signed_int
 
 
 root = Path('.')
@@ -50,6 +51,13 @@ class KeyboardTest(unittest.TestCase):
                     output = simulate_keypresses(keypresses, text_mode=False)
                     self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
 
+class MouseTest(unittest.TestCase):
+    def test_to_signed_int(self):
+        self.assertEqual(to_signed_int(0, 8), 0)
+        self.assertEqual(to_signed_int(127, 8), 127)
+        self.assertEqual(to_signed_int(128, 8), -128)
+        self.assertEqual(to_signed_int(255, 8), -1)
+        self.assertEqual(to_signed_int(1023, 10), -1)
 
 if __name__ == '__main__':
     unittest.main()
