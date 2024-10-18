@@ -1,3 +1,0 @@
-matplotlib
-keyboard
-scapy
