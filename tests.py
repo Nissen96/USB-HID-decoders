@@ -58,6 +58,8 @@ class MouseTest(unittest.TestCase):
         self.assertEqual(to_signed_int(128, 8), -128)
         self.assertEqual(to_signed_int(255, 8), -1)
         self.assertEqual(to_signed_int(1023, 10), -1)
+        kebab = sum(ord(char) for char in "kebab")
+        self.assertEqual(to_signed_int(kebab, 16), kebab)
 
 if __name__ == '__main__':
     unittest.main()
