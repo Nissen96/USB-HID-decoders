@@ -70,6 +70,26 @@ SCAN_CODES = {
     0x52: ('UP',),
 } | {0x3A + i: f'F{i + 1}' for i in range(12)}
 
+NUMPAD_KEYS_NUMLOCK_ON = {
+    0x53: ('NUMLOCK',),
+    0x54: ('/',),
+    0x55: ('*',),
+    0x56: ('-',),
+    0x57: ('+',),
+    0x58: ('ENTER',),
+    0x59: ('1', 'END'),
+    0x5a: ('2', 'DOWN'),
+    0x5b: ('3', 'PGDN'),
+    0x5c: ('4', 'LEFT'),
+    0x5d: ('5',),
+    0x5e: ('6', 'RIGHT'),
+    0x5f: ('7', 'HOME'),
+    0x60: ('8', 'UP'),
+    0x61: ('9', 'PGUP'),
+    0x62: ('0', 'INSERT'),
+    0x63: ('.', 'DELETE'),
+}
+
 MODIFIER_CODES = {
     0x01: 'Ctrl',
     0x02: 'Shift',
@@ -287,13 +307,15 @@ Limitations:
     txt: multi-line text editor environment. Arrow keys move the cursor and <ENTER> inserts a line break.
     cmd: assume single-line interactive environment, i.e. terminal, browser, etc.
          <UP>, <DOWN>, and <TAB> are output explicitly and <ENTER> starts a new line.''')
+    parser.add_argument('--numlock', action='store_true', help='Assume NumLock is on and treat numpad keys as numbers')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
+    if args.numlock:
+        SCAN_CODES.update(NUMPAD_KEYS_NUMLOCK_ON)
     keypresses = decode_keypresses(args.file.read(), offset=args.offset, reserved=not args.no_reserved)
-
     if args.mode == 'raw':
         output = format_raw_keypresses(keypresses)
         args.output.write(output) if args.output else print(output)

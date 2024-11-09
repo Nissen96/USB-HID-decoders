@@ -74,6 +74,14 @@ The captured data might be prefixed with a few identical bytes, use `--offset` t
 Normally, a scanline contains a modifier, then a reserved null byte followed by up to 6 keycodes.
 Rarely, the reserved byte is not present, use `--no-reserved` to skip this.
 
+Optionally, use `--numlock` to assume NumLock is on and treat numpad keys as numbers. It can be hard to assume NumLock is on. Using this flag will make the script assume NumLock is on and treat numpad keys as numbers, as if NumLock was enabled.
+Example:
+
+```bash
+python keyboard_decode.py <usbdata.txt> --numlock
+```
+
+
 ### Mouse
 
 Visualizes mouse movement
