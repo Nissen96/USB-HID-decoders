@@ -1,0 +1,2 @@
+This is an example of a challenge where a lot of text is written and then removed again.
+The final example shows the flag but misses many easter eggs that can be found by instead running in replay mode and watching the "animation" live.

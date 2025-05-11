@@ -174,7 +174,7 @@ i
 g
 h
 t
-/
+<Shift+/>
 <ENTER>
 <ENTER>
 y
@@ -205,14 +205,14 @@ s
 a
 y
 <SPACE>
-j
+<Shift+j>
 o
 h
 n
 n
 y
 <SPACE>
-h
+<Shift+h>
 <SPACE>
 s
 e
@@ -266,7 +266,7 @@ d
 u
 p
 <SPACE>
-i
+<Shift+i>
 '
 m
 <SPACE>
@@ -547,4 +547,4 @@ c
 e
 <ENTER>
 <ENTER>
-x
+<Ctrl+x>

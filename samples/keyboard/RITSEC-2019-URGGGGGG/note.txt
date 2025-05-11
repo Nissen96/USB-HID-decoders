@@ -1,0 +1,4 @@
+Very interesting challenge where the cursor moves around as in a Notepad window,
+text is selected, cut, and pasted, etc.
+
+Easiest to solve in replay mode in a Notepad window and manually doing the text selections necessary when instructed.

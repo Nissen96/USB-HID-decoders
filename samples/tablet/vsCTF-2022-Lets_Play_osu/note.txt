@@ -1,0 +1,7 @@
+The challenge started by writing out a fake flag.
+Then it wrote the real contents of the flag, one character at a time on top of each other.
+
+This is where the animation functionality is very helpful.
+Run the mouse decoder with e.g. --speed 2.
+Then note down characters during the animation, pressing SPACE to pause/resume.
+When the view is too cluttered after a few characters, press C to clear.

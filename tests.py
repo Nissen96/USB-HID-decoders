@@ -24,12 +24,29 @@ class KeyboardTest(unittest.TestCase):
     def setUp(self):
         self.longMessage = False
 
+    def parse_args(self, path):
+        offset = 0
+        reserved = True
+        if (path / 'args.txt').exists():
+            with open(path / 'args.txt') as f:
+                args = f.read().strip().split(" ")
+
+            if "--no-reserved" in args:
+                reserved = False
+
+            if "--offset" in args:
+                idx = args.index("--offset")
+                offset = int(args[idx + 1])
+
+        return offset, reserved
+
     def test_raw_output(self):
         for ctf in (root / 'samples' / 'keyboard').iterdir():
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-raw.txt') as g:
                     expected = g.read()
-                    keypresses = decode_keypresses(f.read())
+                    offset, reserved = self.parse_args(ctf)
+                    keypresses = decode_keypresses(f.read(), offset, reserved)
                     output = format_raw_keypresses(keypresses)
                     self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
 
@@ -38,7 +55,8 @@ class KeyboardTest(unittest.TestCase):
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-sim-txt.txt') as g:
                     expected = g.read()
-                    keypresses = decode_keypresses(f.read())
+                    offset, reserved = self.parse_args(ctf)
+                    keypresses = decode_keypresses(f.read(), offset, reserved)
                     output = simulate_keypresses(keypresses, text_mode=True)
                     self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
 
@@ -47,7 +65,8 @@ class KeyboardTest(unittest.TestCase):
             with self.subTest(ctf.name):
                 with open(ctf / 'usbdata.txt') as f, open(ctf / 'output-sim-cmd.txt') as g:
                     expected = g.read()
-                    keypresses = decode_keypresses(f.read())
+                    offset, reserved = self.parse_args(ctf)
+                    keypresses = decode_keypresses(f.read(), offset, reserved)
                     output = simulate_keypresses(keypresses, text_mode=False)
                     self.assertEqual(expected, output, f'Decoded keypresses do not match expected output\n{error_message.format(expected=expected, output=output)}')
 
