@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import argparse
-import time
+import os
+import signal
 import sys
+import time
 
 
 SCAN_CODES = {
@@ -83,9 +85,11 @@ MODIFIER_CODES = {
 
 
 def replay_keypresses(keypresses, delay=20):
-    import keyboard
-    import os
-    import signal
+    try:
+        import keyboard
+    except ModuleNotFoundError:
+        print('Module \'keyboard\' is required for replay mode. Please install with \'pip install keyboard\'')
+        os._exit(0)
 
     # Force quit on q and sigint (e.g. Ctrl+C)
     keyboard.on_press_key('q', lambda _: os._exit(0))

@@ -4,24 +4,27 @@ import os
 import signal
 
 
+signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
+listen_keypress = False
+
 try:
     import keyboard
+
+    # Check for non-root access on Linux
+    keyboard.unhook_all()
+
     listen_keypress = True
 except ModuleNotFoundError:
-    print('Keyboard module not found, keypresses ignored')
-    listen_keypress = False
-
-# Check for non-root access on Linux
-try:
-    keyboard.unhook_all()
+    print('Module \'keyboard\' not found, keypresses ignored')
 except ImportError:
     print('Keyboard module requires root access, keypresses ignored')
-    listen_keypress = False
+except AssertionError:
+    print('Keyboard module failed to create a device file (maybe you are running in WSL?), keypresses ignores')
+
 
 if listen_keypress:
     # Force quit on q and sigint (e.g. Ctrl+C)
     keyboard.on_press_key('q', lambda _: os._exit(0))
-    signal.signal(signal.SIGINT, lambda signum, frame: os._exit(0))
 
     # Pause on <SPACE>
     PAUSE = False
