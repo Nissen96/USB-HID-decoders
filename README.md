@@ -58,6 +58,8 @@ python extract_hid_data.py <input.pcap> -o output.txt
 
 Requires the Python library `scapy`. Tries to recover device name and info if possible, but less reliable for now.
 
+---
+
 ### ⌨️ Keyboard Decoder
 
 Convert HID scan codes to readable keystrokes.
@@ -98,6 +100,8 @@ Format options:
 
 - `--offset`: Index of modifier byte in case of added prefix bytes (default: `0`)
 - `--no-reserved`: Use if the reserved byte is missing (e.g. USBPcap outputs)
+
+---
 
 ### 🖱️ Mouse Decoder
 
@@ -141,6 +145,8 @@ Format options:
 - `--offset`: Index of `click` field in each data line (default: `0`)
 - `--bit-lengths`: Bit lengths of fields `[click, x, y]` (default: `8 12 12`)
 
+---
+
 ### 🖊️​ Tablet Decoder
 
 Visualize tablet/pen input (pressure ignored).
@@ -171,6 +177,8 @@ Keyboard controls during animation:
 
 Requires Python library `keyboard`
 
+---
+
 ### 📌 Tips
 
 - The decoders often work out of the box, but you might need to analyze some data lines manually to figure out the format options
@@ -190,6 +198,9 @@ Requires Python library `keyboard`
   - Use `raw` to see every keypress explicitly or `replay` with a delay to see the behaviour in real time
 - In `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10 due to a bug in the `keyboard` library
   - As a workaround, the program will stop and wait for you to perform those keypresses manually.
+- Check out the samples folder to see usage from various CTFs
+
+---
 
 ### 🔎​ Extraction Details
 
