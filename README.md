@@ -1,159 +1,208 @@
 # USB HID Decoders
 
-This repository contains decoders and visualizers for various USB Human Interface Devices (HIDs).
+Decoders and visualizers for USB Human Interface Devices (HIDs) — keyboard, mouse, and tablet — including tools to extract raw HID data from PCAP files.
 
-HID specification: https://www.usb.org/sites/default/files/hid1_11.pdf
+📄 HID Spec: [USB HID 1.11](https://www.usb.org/sites/default/files/hid1_11.pdf)
 
-Currently supports keyboard, mouse, and tablet data but ignores pressure information for tablets.
+## ✨ Features
 
-A utility Python and bash script has been included to extract HID data from a PCAP file.
+- **[PCAP extraction](#-pcap-extraction)** — extract raw HID data using `scapy` or `tshark`.
+- **[Keyboard decoder](#️-keyboard-decoder)** — translate scan codes into keystrokes
+- **[Mouse decoder](#️-mouse-decoder)** — draw mouse movement and clicks
+- **[Tablet decoder](#️-tablet-decoder)** — draw tablet pen strokes
 
+## 🚀 Installation
 
-## Installation
-
-Simply clone the repo and run any included script:
+Clone the repo:
 
 ```bash
 git clone https://github.com/Nissen96/USB-HID-decoders.git
 cd USB-HID-decoders
 ```
 
-Optionally install dependencies from requirements file:
+Install Python dependencies (optional):
 
 ```bash
 pip install -r requirements.txt
 ```
 
-- `matplotlib` is used by mouse and tablet scripts for drawing and not required for keyboard decoding.
-- `scapy` is only used by `extract_hid_data.py` to load and parse PCAP files (optionally, use the bash script).
-- `keyboard` is optional but needed for `replay` mode in the keyboard decoder and to use keyboard commands while running the mouse or tablet decoder.
-
-Note, on Linux you can only use the `keyboard` library as root.
+- `matplotlib`: Required for mouse/tablet visualizations
+- `scapy`: Needed for `extract_hid_data.py` (not required if using bash version).
+- `keyboard`: Enables replay mode and keyboard shortcuts during mouse/tablet animations (must be run as root on Linux, unsupported in WSL).
 
 ## Usage
 
-### Keyboard
+### 📥 PCAP Extraction
 
-Converts keyboard scan codes to a human readable format
+Extract the HID data from a PCAP with one of the two helper scripts:
 
-```bash
-python keyboard_decode.py <usbdata.txt> [options]
-```
-
-Key codes taken from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
-
-**Modes**
-
-- `raw`: Output each keypress (with modifiers) explicitly on a separate line.
-- `simulate`: Simulate the keypresses as if written in a text editor with a US-keyboard.
-- `replay`: Replay keypresses on the actual machine in the current window (unsafe!).
-
-`simulate` mode is default and will likely produce the expected output. It handles most scan codes and `Shift`.
-Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are not simulated, but written explicitly.
-
-A simulation environment can be set with `--env` (`txt` or `cmd`).
-In text mode (default), a multiline text editor is assumed and e.g. all arrow key presses interpreted as cursor movement.
-`<ENTER>` will insert a line break at the cursor position.
-In command mode, a single-line interactive environment (terminal, browser, etc.) is assumed, where keys like `<TAB>`, `<ENTER>`, `<UP>`, and `<DOWN>` are considered action keys.
-`<ENTER>` starts a new line, and other actions are written out explicitly.
-
-If the capture is from a non-US keyboard layout, the simulation may produce partially incorrect results.
-
-Optionally, use `replay` mode to actually replay keypresses.
-Be careful if using this mode on unknown/untrusted input, it will type whatever was typed during the capture, including any commands, shortcuts, etc.
-Make sure to first inspect the output from the raw and simulated modes. Press `q` at any time during replay to stop.
-
-In case anything important was written and then deleted during the capture, use `raw` or `replay` since `simulate` will simulate the deletions as well and provide only a final output.
-
-Note: `raw` mode and `replay` mode are the most accurate (assuming you set the right keyboard layout and are in the right environment) but in `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10. This is a known bug in the underlying keybord library. As a workaround, the program will stop and wait for you to perform those keypresses manually.
-
-**Other options**
-
-The captured data might be prefixed with a few identical bytes, use `--offset` to specify the offset of the actual keyboard data in each line.
-
-Normally, a scanline contains a modifier, then a reserved null byte followed by up to 6 keycodes.
-Rarely, the reserved byte is not present, use `--no-reserved` to skip this.
-
-### Mouse
-
-Visualizes mouse movement
+#### Bash
 
 ```bash
-python mouse_decode.py <usbdata.txt> [options]
+./extract_hid_data.sh <input.pcap>
 ```
 
-Button presses can be shown explicitly with `--clicks`.
+Requires `tshark`, the command line version of Wireshark. Simplest and most reliable.
 
-**Modes**
+One-liner to extract HID data from Bluetooth Attribute Protocol (`btatt`):
 
-- 0: Don't show any mouse movement (use with `--clicks` for clicks only)
-- 1: Show mouse movement only while any mouse button is held
-- 2: Show all mouse movements
+```bash
+tshark -r <pcap-file> -Y "btatt.value && frame.len == 20" -T fields -e "btatt.value" > usbdata.txt
+```
 
-Colors indicate the mouse button(s) pressed when clicking/moving.
+#### Python
+
+```bash
+python extract_hid_data.py <input.pcap> -o output.txt
+```
+
+Requires the Python library `scapy`. Tries to recover device name and info if possible, but less reliable for now.
+
+### ⌨️ Keyboard Decoder
+
+Convert HID scan codes to readable keystrokes.
+
+📎[Scan code reference](https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2).
+
+```bash
+python keyboard_decode.py [--offset N] [--mode {raw,simulate,replay}]
+                          [--env {txt,cmd}] [--delay MS] [--no-reserved]
+                          [-o OUTPUT] file
+```
+
+**Modes (`--mode`)**:
+
+- `raw`: Print each keypress (with modifiers) on a separate line
+- `simulate` _(default)_: Simulate typed text on a US-keyboard
+- `replay`: Replays keystrokes in active window (⚠️ unsafe for untrusted input)
+  - `--delay <DELAY>` to set delay in miliseconds between keystrokes (default: `50`)
+
+**Environment (`--env`)** _(`simulate` mode only)_:
+
+- `txt` _(default)_: Multiline editor behavior
+  - Arrow keys are interpreted as cursor movement and simulated
+  - `<ENTER>` will insert a line break at the cursor position
+- `cmd`: Interactive shell/browser behavior
+  - Keys like `<TAB>`, `<ENTER>`, `<UP>`, and `<DOWN>` are considered action keys
+  - `<ENTER>` starts a new line, but other actions are written out explicitly
+
+**Data Format**:
+
+Normal keyboard HID data has a modifier byte (e.g. `SHIFT`, `CTRL`, etc.), a reserved null byte, and then up to six keycode bytes (in case of multiple keys pressed):
+
+```
+| Modifier | Reserved | Keycode 1 | ... | Keycode 6 |
+```
+
+Format options:
+
+- `--offset`: Index of modifier byte in case of added prefix bytes (default: `0`)
+- `--no-reserved`: Use if the reserved byte is missing (e.g. USBPcap outputs)
+
+### 🖱️ Mouse Decoder
+
+Visualize mouse movements and clicks.
+
+```bash
+python mouse_decode.py [--offset N] [--mode 0-2] [--clicks]
+                       [--speed SPEED] [--bit-lengths {8,12,16}...] file
+```
+
+**Modes (`--mode`)**:
+
+- `0`: Do not draw movement
+  - Combine with `--clicks` to show button clicks only
+- `1` _(default)_: Draw movement when buttons are held
+- `2`: Draw all movements
+
+Colors indicate the mouse button(s) pressed when clicking/moving (left/middle/right).
 Movement while no buttons are held is colored gray in mode 2.
 
-**Other options**
+**Animation**:
 
-Moves and clicks can be animated by setting `--speed [1-10]`.
+- `--speed`: Set animation speed 0-10 (default: `0`)
+  - `0` disables animation and shows finished drawing
 
-The captured data might be prefixed with a few identical bytes, use `--offset` to specify the offset of the actual mouse data in each line.
+Keyboard controls during animation (very helpful for onscreen keyboard usage or drawing/writing in the same spot multiple times):
 
-Each data line has a field to indicate mousedown, x displacement, and y displacement.
-These are little endian and may have different bit lengths (8, 12, or 16).
-This can be set with `-b / --bit-lengths`, e.g. `-b 8 12 12`.
+- `SPACE`: Pause/resumse
+- `c`: Clear screen and continue
+- `q`: Quit
 
-**Keyboard commands**
+Requires Python library `keyboard`
 
-Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`.
-These options are especially helpful for visualizing screen keyboard usage or when drawing/writing with the mouse in the same spot multiple times.
+**Data Format**:
 
-Note: Keyboard commands require the `keyboard library`.
+Mouse data can come in many formats but has consecutive fields for `click`, `x`, and `y`.
+The fields are each either 8, 12, or 16 bits, and should in total be divisible by 16.
 
-### Tablet
+Format options:
 
-Visualizes pen drawing on tablet.
+- `--offset`: Index of `click` field in each data line (default: `0`)
+- `--bit-lengths`: Bit lengths of fields `[click, x, y]` (default: `8 12 12`)
+
+### 🖊️​ Tablet Decoder
+
+Visualize tablet/pen input (pressure ignored).
 
 ```bash
-python tablet_decode.py <usbdata.txt> [options]
+python tablet_decode.py [--offset N] [--mode 0-2]
+                        [--speed SPEED] file
 ```
 
-**Modes**
+**Modes (`--mode`)**:
 
-- 1: Show pen movement only on pen click
-- 2: Show all pen movements
+- `1` _(default)_: Draw only when pen is clicked
+- `2`: Draw all movements
 
-Color indicates drawing while holding pen button. Pen movement with no buttons held is colored gray (in mode 2).
+Colors indicate the mouse button(s) pressed when clicking/moving (left and/or right).
+Movement while no buttons are held is colored gray in mode 2.
 
-**Other options**
+**Animation**:
 
-Animate drawing by setting `--speed [1-10]`.
+- `--speed`: Set animation speed 0-10 (default: `0`)
+  - `0` disables animation and shows finished drawing
 
-The captured data might be prefixed with a few identical bytes, use `--offset` to specify the offset of the actual tablet data in each line.
+Keyboard controls during animation:
 
-**Keyboard commands**
+- `SPACE`: Pause/resumse
+- `c`: Clear screen and continue
+- `q`: Quit
 
-Pause/resume animation with `<SPACE>` and clear the screen with `c`. Quit at any time by pressing `q`.
+Requires Python library `keyboard`
 
-Note: Keyboard commands require the `keyboard library`.
+### 📌 Tips
 
-## PCAP Extraction
+- The decoders often work out of the box, but you might need to analyze some data lines manually to figure out the format options
+  - All scripts support an `--offset` to the real data when data lines are prefixed with extra bytes
+  - Mouse decoder supports different bit lengths for the three data fields
+- For animation, enable keyboard interaction by installing Python library `keyboard`
+- For keyboard decoding, `simulate` mode typically produces the expected final output
+  - Handles most scan codes, arrow keys, `Shift`, etc.
+  - Key combos (e.g. `<Ctrl+c>`, `<Alt+TAB>`, `<Shift+LEFT>`) and some special keys (e.g. `<ESC>`) are written explicitly.
+- Be careful with `replay` mode, this will repeat all keypresses typed during the capture
+  - This includes any commands, shortcuts, etc. - can be useful for e.g. a Vim capture
+  - Inspect output from raw/simulated mode before running replay
+  - Set the computer's keyboard layout to the same as the expected layout used during capture
+  - Press `q` at any time to stop immediately
+- A keyboard capture might contain important text that is later deleted/overwritten
+  - `simulate` will only provide the final output
+  - Use `raw` to see every keypress explicitly or `replay` with a delay to see the behaviour in real time
+- In `replay` mode, `<Shift+ArrowKey>` does not select text on Windows 10 due to a bug in the `keyboard` library
+  - As a workaround, the program will stop and wait for you to perform those keypresses manually.
 
-The script `extract_hid_data.py` can be used to extract the USB HID data from a PCAP with the library `scapy`.
-
-Alternatively, the bash script `extract_hid_data.sh` can be used, which extracts the data with `tshark`.
-
-**Explanation**
+### 🔎​ Extraction Details
 
 USB HID data can be extracted from a packet capture with `tshark`, the CLI of Wireshark.
 In Wireshark, the relevant data is stored in the field `usb.capdata` (Leftover Capture Data) or `usbhid.data` (HID Data).
-Extract with
+
+These can be extracted separately with
 
 ```bash
 tshark -r <pcap-file> -Y 'usbhid.data' -T fields -e usbhid.data > usbdata.txt
 ```
 
-or
+and
 
 ```bash
 tshark -r <pcap-file> -Y 'usb.capdata' -T fields -e usb.capdata > usbdata.txt
@@ -165,19 +214,11 @@ Get data from a specific device by adding a filter for its address, e.g.
 -Y 'usb.src == "1.3.1"'
 ```
 
-The bash script is a one-liner to extract HID data from all USB devices and store in separate files, named after device address:
+The bash script provided in the repo is a one-liner to extract HID data from all USB devices and store in separate files, named after device address:
 
 ```bash
 tshark -r <pcap-file> -Y "usb.capdata || usbhid.data" -T fields -e usb.src -e usb.capdata -e usbhid.data |  # Extract usb.src, usb.capdata, and usbhid.data from all packets with HID data
 sort -s -k1,1 |  # Sort on first field only (usb.src)
 awk '{ printf "%s", (NR==1 ? $1 : pre!=$1 ? "\n" $1 : "") " " $2; pre=$1 }' |  # Group data by usb.src
 awk '{ for (i=2; i<=NF; i++) print $i > "usbdata-" $1 ".txt" }'  # For each group, store data in usbdata-<usb.src>.txt
-```
-
-**Bluetooth Attribute Protocol data**
-
-Extract HID data from Bluetooth Attribute Protocol (`btatt`):
-
-```bash
-tshark -r <pcap-file> -Y "btatt.value && frame.len == 20" -T fields -e "btatt.value" > usbdata.txt
 ```
