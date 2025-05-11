@@ -7,6 +7,7 @@ import time
 
 
 SCAN_CODES = {
+    # Letters
     0x04: ('a', 'A'),
     0x05: ('b', 'B'),
     0x06: ('c', 'C'),
@@ -33,6 +34,8 @@ SCAN_CODES = {
     0x1B: ('x', 'X'),
     0x1C: ('y', 'Y'),
     0x1D: ('z', 'Z'),
+
+    # Numbers
     0x1E: ('1', '!'),
     0x1F: ('2', '@'),
     0x20: ('3', '#'),
@@ -43,6 +46,8 @@ SCAN_CODES = {
     0x25: ('8', '*'),
     0x26: ('9', '('),
     0x27: ('0', ')'),
+
+    # Control characters and symbols
     0x28: ('ENTER',),
     0x29: ('ESC',),
     0x2A: ('BACKSPACE',),
@@ -61,6 +66,22 @@ SCAN_CODES = {
     0x37: ('.', '>'),
     0x38: ('/', '?'),
     0x39: ('CAPS LOCK',),
+
+    # Fn keys
+    0x3A: ('F1',),
+    0x3B: ('F2',),
+    0x3C: ('F3',),
+    0x3D: ('F4',),
+    0x3E: ('F5',),
+    0x3F: ('F6',),
+    0x40: ('F7',),
+    0x41: ('F8',),
+    0x42: ('F9',),
+    0x43: ('F10',),
+    0x44: ('F11',),
+    0x45: ('F12',),
+
+    # Control characters
     0x4A: ('HOME',),
     0x4B: ('PAGE UP',),
     0x4C: ('DELETE',),
@@ -70,7 +91,26 @@ SCAN_CODES = {
     0x50: ('LEFT',),
     0x51: ('DOWN',),
     0x52: ('UP',),
-} | {0x3A + i: f'F{i + 1}' for i in range(12)}
+    0x53: ('NUMLOCK',),
+
+    # Numpad
+    0x54: ('/',),
+    0x55: ('*',),
+    0x56: ('-',),
+    0x57: ('+',),
+    0x58: ('ENTER',),
+    0x59: ('1', 'END'),
+    0x5a: ('2', 'DOWN'),
+    0x5b: ('3', 'PAGE DOWN'),
+    0x5c: ('4', 'LEFT'),
+    0x5d: ('5',),
+    0x5e: ('6', 'RIGHT'),
+    0x5f: ('7', 'HOME'),
+    0x60: ('8', 'UP'),
+    0x61: ('9', 'PAGE UP'),
+    0x62: ('0', 'INSERT'),
+    0x63: ('.', 'DELETE'),
+}
 
 MODIFIER_CODES = {
     0x01: 'Ctrl',
