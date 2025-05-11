@@ -24,25 +24,26 @@ def decode_line(line, bit_lengths):
     return click, x_displacement, y_displacement
 
 
-def decode_mouse_data(raw_data, bit_lengths, offset=0):
+def decode_mouse_data(raw_data, bit_lengths, offset=0, absolute=False):
     mouse_data = [
         bytes.fromhex(''.join(d.strip().split(':')))[offset:]
         for d in raw_data.split('\n') if d
     ]
 
-    clicks, xs, ys = [], [], []
-    x, y = 0, 0
+    clicks, xs, ys = [], [0], [0]
     for line in mouse_data:
-        click, x_displacement, y_displacement = decode_line(line, bit_lengths)
+        click, new_x, new_y = decode_line(line, bit_lengths)
         clicks.append(click)
 
-        x += x_displacement
-        xs.append(x)
+        if not absolute:
+            # Relative coordinates
+            new_x += xs[-1]
+            new_y = ys[-1] - new_y
 
-        y -= y_displacement
-        ys.append(y)
+        xs.append(new_x)
+        ys.append(new_y)
 
-    return clicks, xs, ys
+    return clicks, xs[1:], ys[1:]
 
 
 def parse_args():
@@ -60,6 +61,7 @@ def parse_args():
   2: show all mouse movements''')
     parser.add_argument('-c', '--clicks', action='store_true', help='show mouse clicks explicitly')
     parser.add_argument('-s', '--speed', type=int, choices=range(0, 11), default=0, metavar='0, 1-10', help='animation speed, 0 for no animation (default: %(default)s)')
+    parser.add_argument('-a', '--absolute', action='store_true', help='interpret mouse coordinates as absolute')
     return parser.parse_args()
 
 
@@ -75,7 +77,7 @@ def main():
         print('Total bit length must be a multiple of 8')
         exit()
 
-    clicks, xs, ys = decode_mouse_data(args.file.read(), offset=args.offset, bit_lengths=args.bit_lengths)
+    clicks, xs, ys = decode_mouse_data(args.file.read(), bit_lengths=args.bit_lengths, offset=args.offset, absolute=args.absolute)
     draw_movement(clicks, xs, ys, draw_mode=args.mode, draw_clicks=args.clicks, speed=args.speed)
 
 

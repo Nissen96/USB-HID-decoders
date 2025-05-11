@@ -108,8 +108,8 @@ Format options:
 Visualize mouse movements and clicks.
 
 ```bash
-python mouse_decode.py [--offset N] [--mode 0-2] [--clicks]
-                       [--speed SPEED] [--bit-lengths {8,12,16}...] file
+python mouse_decode.py [--offset N] [--mode 0-2] [--clicks] [--speed SPEED]
+                       [--bit-lengths {8,12,16}...] [--absolute] file
 ```
 
 **Modes (`--mode`)**:
@@ -144,6 +144,7 @@ Format options:
 
 - `--offset`: Index of `click` field in each data line (default: `0`)
 - `--bit-lengths`: Bit lengths of fields `[click, x, y]` (default: `8 12 12`)
+- `--absolute`: Interpret coordinates as absolute instead of the default relative cumulative
 
 ---
 
