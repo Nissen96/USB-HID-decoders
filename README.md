@@ -143,7 +143,7 @@ The fields are each either 8, 12, or 16 bits, and should in total be divisible b
 Format options:
 
 - `--offset`: Index of `click` field in each data line (default: `0`)
-- `--bit-lengths`: Bit lengths of fields `[click, x, y]` (default: `8 12 12`)
+- `--bit-lengths`: Bit lengths of fields `[click, x, y]` (default: `8 8 8`)
 - `--absolute`: Interpret coordinates as absolute instead of the default relative cumulative
 
 ---

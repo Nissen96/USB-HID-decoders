@@ -54,7 +54,7 @@ def parse_args():
     )
     parser.add_argument('file', type=argparse.FileType('r'), help='mouse data file')
     parser.add_argument('--offset', type=int, default=0, help='byte offset of data (default: %(default)s)')
-    parser.add_argument('-b', '--bit-lengths', type=int, choices=[8, 12, 16], default=[8, 12, 12], nargs='+', help='bit lengths of each data field [click, x, y] (default: 8 12 12)')
+    parser.add_argument('-b', '--bit-lengths', type=int, choices=[8, 12, 16], default=[8, 8, 8], nargs='+', help='bit lengths of each data field [click, x, y] (default: 8 8 8)')
     parser.add_argument('-m', '--mode', type=int, choices=range(3), default=1, metavar='0-2', help='''display mode for mouse movement, from less to more verbose (default: %(default)s)
   0: hide mouse movements (use with -c for clicks only)
   1: show mouse movements while any mouse button is held

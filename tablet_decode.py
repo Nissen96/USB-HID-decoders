@@ -19,7 +19,7 @@ def decode_tablet_data(raw_data, offset=0):
 
     clicks, xs, ys, pressures = [], [], [], []
     for line in tablet_data:
-        click, x, y, pressure = struct.unpack('<Bhhh', line)
+        click, x, y, pressure = struct.unpack('<Bhhh', line[:7])
         clicks.append(click & 0b1)
         pressures.append(pressure)
         xs.append(x)
